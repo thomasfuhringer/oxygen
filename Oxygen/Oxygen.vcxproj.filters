@@ -1,0 +1,172 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Include\ApplicationObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\BoolObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\BoxObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\ButtonObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EntryObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Error.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\IconObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\IntegerObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\LabelObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\ListObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\MdiAreaObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\MdiWindowObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\MenuObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Object.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Oxygen.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\StatusBarObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\StringObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\TabObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Version.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\WidgetObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\WindowObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\ToolBarObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\FloatObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="ApplicationObject.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BoolObject.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BoxObject.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ButtonObject.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EntryObject.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Error.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="IconObject.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="IntegerObject.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LabelObject.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ListObject.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MdiAreaObject.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MdiWindowObject.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuObject.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Oxygen.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StatusBarObject.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StringObject.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TabObject.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WidgetObject.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowObject.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolBarObject.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FloatObject.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resource.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Oxygen.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+</Project>

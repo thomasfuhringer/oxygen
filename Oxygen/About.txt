@@ -1,0 +1,20 @@
+Oxygen C library
+
+© 2015 by Thomas Führinger 
+thomasfuhringer@live.com
+
+Released under the terms of the GNU General Public License
+
+
+Variable Prefixes
+----------------------------------------------------------
+szString     string, wide character (LPWSTR)
+sString      string, UTF-8 (char*)
+iInt	     integer (int or long)
+dFloat	     float (double)
+nSize	     size_t
+bBool		 boolean (BOOL)
+fnFunction	 function ((*))
+fFlags		 binary flags (unsigned int)
+pPointer     pointer to a structure (non OxObject*)
+oxObject     pointer to an Oxygen object (OxObject* or subclass instance)	 
