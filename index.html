@@ -1,0 +1,242 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Oxygen by thomasfuhringer</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-light.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1 class="header">Oxygen</h1>
+        <p class="header"> C library for Win32 application development</p>
+
+        <ul>
+          <li class="download"><a class="buttons" href="https://github.com/thomasfuhringer/oxygen/zipball/master">Download ZIP</a></li>
+          <li class="download"><a class="buttons" href="https://github.com/thomasfuhringer/oxygen/tarball/master">Download TAR</a></li>
+          <li><a class="buttons github" href="https://github.com/thomasfuhringer/oxygen">View On GitHub</a></li>
+        </ul>
+
+        <p class="header">This project is maintained by <a class="header name" href="https://github.com/thomasfuhringer">thomasfuhringer</a></p>
+
+
+      </header>
+      <section>
+        <p>I am working on a simple little library that helps me write Windows applications in plain C.
+It implements the object oriented paradigm, featuring single inheritance and virtual methods.
+The API is modeled loosely along the Python C API.</p>
+
+<h3>
+<a id="hello-world" class="anchor" href="#hello-world" aria-hidden="true"><span class="octicon octicon-link"></span></a>Hello World!</h3>
+
+<p>This is how the all time classic would be implemented:</p>
+
+<pre><code>#include "Oxygen.h"
+
+int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPTSTR lpCmdLine, _In_ int nCmdShow)
+{
+    UNREFERENCED_PARAMETER(hPrevInstance);
+    UNREFERENCED_PARAMETER(lpCmdLine);
+
+    Oxygen_Init("Hello");
+
+    OxRect rc = { .iLeft = 40, .iTop = 30, .iWidth = 320, .iHeight = 240 };
+    OxApp-&gt;oxWindow = OxWindow_New(NULL, &amp;rc, "Powered by Oxygen");
+
+    rc = (OxRect){ .iLeft = 20, .iTop = OxWIDGET_CENTER, .iWidth = -20, .iHeight = 20 };
+    OxLabelObject* oxLabel = OxLabel_New(OxApp-&gt;oxWindow, &amp;rc, "Hello World!");
+    OxLabel_Align(oxLabel, OxALIGN_HORIZ_CENTER);
+
+    OxWidget_ShowV(OxApp-&gt;oxWindow, TRUE);
+    return OxApplication_Run();
+}
+</code></pre>
+
+<p>An example of a more complex application would look like this:</p>
+
+<pre><code>#include "Oxygen.h"
+
+typedef struct _ClientWindow {
+    OxTabObject* oxTab;
+    OxTabPageObject* oxTabPageDivision;
+    OxEntryObject* oxEntryDividend;
+    OxEntryObject* oxEntryDivisor;
+    OxLabelObject* oxLabelQuotient;
+    OxButtonObject* oxButtonDivide;
+    OxTabPageObject* oxTabPageMultiplication;
+    OxLabelObject* oxLabelMultiplication;
+} ClientWindow;
+
+// forward declarations
+static BOOL WindowBeforeDeleteCB(OxWindowObject* ox);
+static BOOL ButtonDivideCB(OxButtonObject* ox);
+static BOOL DivisorVerifyCB(OxEntryObject* ox);
+static void AboutCB();
+
+int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPTSTR lpCmdLine, _In_ int nCmdShow)
+{
+    UNREFERENCED_PARAMETER(hPrevInstance);
+    UNREFERENCED_PARAMETER(lpCmdLine);
+
+    OxCALL(Oxygen_Init("HOx")); // show error if result of call is FALSE
+
+    OxRect rc = { .iLeft = 40, .iTop = 30, .iWidth = 600, .iHeight = 400 };
+    OxASSIGN(OxApp-&gt;oxWindow = OxWindow_New(NULL, &amp;rc, "Hello Oxygen")); // show error if assigned value is NULL
+    OxApp-&gt;oxWindow-&gt;iMinHeight = 400;
+    OxApp-&gt;sStateID = "HelloOxygen";
+    OxCALL(OxApplication_RestoreState());
+
+    OxMenuObject* oxMainMenu;
+    OxASSIGN(oxMainMenu = OxMenu_New("Main Menu"));
+    OxMenuObject* oxMdiWindowsMenu = OxMenu_New("Windows");
+    OxMenuObject* oxHelpMenu = OxMenu_New("Help");
+    OxMenuItemObject* oxMenuItem;
+    OxIconObject* oxIcon = OxIcon_FromFile("Example.ico");
+    OxASSIGN(oxMenuItem = OxMenuItem_New("About...", AboutCB, oxIcon));
+
+    OxCALL(OxMenu_AppendItem(oxMainMenu, (OxObject*)oxMdiWindowsMenu));
+    OxCALL(OxMenu_AppendItem(oxMainMenu, (OxObject*)oxHelpMenu));
+    OxCALL(OxMenu_AppendItem(oxHelpMenu, (OxObject*)oxMenuItem));
+    OxCALL(OxWindow_SetMenu(OxApp-&gt;oxWindow, oxMainMenu));
+
+    OxToolBarObject* oxToolBar = OxToolBar_New((OxWidgetObject*)OxApp-&gt;oxWindow);
+    //XX(oxToolBar);
+    OxCALL(OxToolBar_AppendItem(oxToolBar, oxMenuItem));
+    int iTB = OxToolBar_GetHeight(oxToolBar);
+
+    int iParts[] = { 120, -50, 0 }; // three parts: separations at 120 from left, 50 from right, 0 as sentinel
+    OxStatusBarObject* oxStatusBar = OxStatusBar_New((OxWidgetObject*)OxApp-&gt;oxWindow, iParts);
+    OxStatusBar_Message(oxStatusBar, "Ready", 0);
+    int iSB = OxStatusBar_GetHeight(oxStatusBar);
+
+    rc = (OxRect){ .iLeft = 0, .iTop = iTB, .iWidth = 0, .iHeight = -iSB };
+    OxMdiAreaObject* oxMdiArea = OxMdiArea_New((OxWidgetObject*)OxApp-&gt;oxWindow, &amp;rc);
+    OxMdiArea_SetMenu(oxMdiArea, oxMdiWindowsMenu);
+
+    rc = (OxRect){ .iLeft = 10, .iTop = 10, .iWidth = 620, .iHeight = 440 };
+    OxMdiWindowObject* oxMdiWindow = OxMdiWindow_New(oxMdiArea, &amp;rc, "Calculator");
+    oxMdiWindow-&gt;iMinHeight = 400;
+    ClientWindow* pMW = (ClientWindow*)OxAllocate(sizeof(ClientWindow));
+    oxMdiWindow-&gt;pUserData = pMW;
+    OxWindowClass.aMethods[OxWIDGET_BEFOREDELETE] = WindowBeforeDeleteCB; // subclassing 'light'
+
+    OxIconObject* oxExampleIcon = OxIcon_FromFile("Example.ico");
+
+    rc = (OxRect){ .iLeft = 20, .iTop = 50, .iWidth = -20, .iHeight = -70 };
+    OxASSIGN(pMW-&gt;oxTab = OxTab_New((OxWidgetObject*)oxMdiWindow, &amp;rc));
+    OxASSIGN(pMW-&gt;oxTabPageDivision = OxTabPage_New(pMW-&gt;oxTab, "Division", -1));
+
+
+    rc = (OxRect){ .iLeft = 80, .iTop = 20, .iWidth = -20, .iHeight = 20 };
+    OxASSIGN(pMW-&gt;oxEntryDividend = OxEntry_New((OxWidgetObject*)pMW-&gt;oxTabPageDivision, &amp;rc));
+    pMW-&gt;oxEntryDividend-&gt;pDataType = &amp;OxIntegerClass;
+    rc.iLeft -= 60; rc.iWidth = 50;
+    pMW-&gt;oxEntryDividend-&gt;oxLabel = OxLabel_New((OxWidgetObject*)pMW-&gt;oxTabPageDivision, &amp;rc, "Dividend");
+
+    rc = (OxRect){ .iLeft = 80, .iTop = 50, .iWidth = -20, .iHeight = 20 };
+    OxASSIGN(pMW-&gt;oxEntryDivisor = OxEntry_New((OxWidgetObject*)pMW-&gt;oxTabPageDivision, &amp;rc));
+    pMW-&gt;oxEntryDivisor-&gt;fnVerifyCB = DivisorVerifyCB;
+    pMW-&gt;oxEntryDivisor-&gt;pDataType = &amp;OxIntegerClass;
+    rc.iLeft -= 60; rc.iWidth = 50;
+    pMW-&gt;oxEntryDividend-&gt;oxLabel = OxLabel_New((OxWidgetObject*)pMW-&gt;oxTabPageDivision, &amp;rc, "Divisor");
+
+    rc = (OxRect){ .iLeft = 80, .iTop = 100, .iWidth = -20, .iHeight = 20 };
+    OxASSIGN(pMW-&gt;oxLabelQuotient = OxLabel_New((OxWidgetObject*)pMW-&gt;oxTabPageDivision, &amp;rc));
+    pMW-&gt;oxLabelQuotient-&gt;pDataType = &amp;OxFloatClass;
+    rc.iLeft -= 60; rc.iWidth = 50;
+    pMW-&gt;oxLabelQuotient-&gt;oxLabel = OxLabel_New((OxWidgetObject*)pMW-&gt;oxTabPageDivision, &amp;rc, "Quotient");
+
+    rc = (OxRect){ .iLeft = -110, .iTop = -40, .iWidth = 90, .iHeight = 20 };
+    OxASSIGN(pMW-&gt;oxButtonDivide = OxButton_New((OxWidgetObject*)pMW-&gt;oxTabPageDivision, &amp;rc, "Divide", ButtonDivideCB));
+
+    OxASSIGN(pMW-&gt;oxTabPageMultiplication = OxTabPage_New(pMW-&gt;oxTab, "Multiplication", -1));
+
+    rc = (OxRect){ .iLeft = 30, .iTop = OxWIDGET_CENTER, .iWidth = -30, .iHeight = 20 };
+    pMW-&gt;oxLabelMultiplication = OxLabel_New((OxWidgetObject*)pMW-&gt;oxTabPageMultiplication, &amp;rc, "Under Construction");
+    OxLabel_Align(pMW-&gt;oxLabelMultiplication, OxALIGN_HORIZ_CENTER);
+
+    return OxApplication_Run();
+}
+
+static BOOL
+DivisorVerifyCB(OxEntryObject* ox)
+{
+    OxIntegerObject* oxDivisor = OxEntry_GetInputData(ox);
+    if (oxDivisor &amp;&amp; oxDivisor != OxNull &amp;&amp; oxDivisor-&gt;iInteger == 0) {
+        MessageBox(0, L"Division by zero not possible.", L"Error", MB_ICONERROR | MB_OK);
+        return FALSE;
+    }
+    return TRUE;
+}
+
+static BOOL
+ButtonDivideCB(OxButtonObject* ox)
+{
+    if (ox-&gt;oxWindow-&gt;oxFocusWidget) // validation callback not passed
+        return TRUE;
+
+    ClientWindow* pMW = (ClientWindow*)ox-&gt;oxWindow-&gt;pUserData;
+
+    if (pMW-&gt;oxEntryDividend-&gt;oxData != OxNull &amp;&amp; pMW-&gt;oxEntryDivisor-&gt;oxData != OxNull) {
+        double dQuotient = ((OxIntegerObject*)pMW-&gt;oxEntryDividend-&gt;oxData)-&gt;iInteger / (double)((OxIntegerObject*)pMW-&gt;oxEntryDivisor-&gt;oxData)-&gt;iInteger;
+        OxFloatObject* oxQuotient = OxFloat_New(dQuotient);
+
+        OxCALL(OxLabel_SetData(pMW-&gt;oxLabelQuotient, oxQuotient));
+    }
+    else
+        MessageBox(0, L"Division not possible.", L"Error", MB_ICONERROR | MB_OK);
+
+    return TRUE;
+}
+
+static void
+AboutCB()
+{
+    OxRect rc = { .iLeft = OxWIDGET_CENTER, .iTop = OxWIDGET_CENTER, .iWidth = 320, .iHeight = 240 };
+    OxWindowObject* oxWindow = OxWindow_New(OxApp-&gt;oxWindow, &amp;rc, "About Hello Oxygen");
+    oxWindow-&gt;iMaxWidth = 320; oxWindow-&gt;iMaxHeight = 240;
+
+    rc = (OxRect){ .iLeft = 40, .iTop = 40, .iWidth = -40, .iHeight = -40 };
+    OxLabelObject* oxLabel = OxLabel_New((OxWidgetObject*)oxWindow, &amp;rc, "Demonstration program for\nOxygen C library\n\nThomas Führinger, 2015");
+    OxWindow_ShowModal(oxWindow);
+    OxREL(oxLabel);
+    OxREL(oxWindow);
+    //return TRUE;
+}
+
+static BOOL
+WindowBeforeDeleteCB(OxWindowObject* ox) // exit gracefully
+{
+    OutputDebugStringA(ox-&gt;pClass-&gt;sName);
+    if (ox-&gt;pClass == &amp;OxMdiWindowClass) {
+        ClientWindow* pMW = (ClientWindow*)ox-&gt;pUserData;
+        OxREL(pMW-&gt;oxLabelMultiplication);
+        OxREL(pMW-&gt;oxTabPageMultiplication);
+        OxREL(pMW-&gt;oxButtonDivide);
+        OxREL(pMW-&gt;oxLabelQuotient);
+        OxREL(pMW-&gt;oxEntryDividend);
+        OxREL(pMW-&gt;oxEntryDivisor);
+        OxREL(pMW-&gt;oxTabPageDivision);
+        OxREL(pMW-&gt;oxTab);
+        OxFree(pMW);
+    }
+    return TRUE;
+}
+</code></pre>
+      </section>
+      <footer>
+        <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+		
+  </body>
+</html>
