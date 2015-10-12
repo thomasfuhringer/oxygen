@@ -44,5 +44,5 @@ OxErr_SetFromWindows()
 	TCHAR sMessage[255];
 	FormatMessageA(FORMAT_MESSAGE_FROM_SYSTEM, 0, GetLastError(), 0, (LPSTR)sMessage, sizeof(sMessage) / sizeof(TCHAR), 0);
 	OxErr_SetString(OxERROR_WINDOWS, sMessage);
-	MessageBoxA(0, sMessage, "MS Windows Error", 0);
+	//MessageBoxA(0, sMessage, "MS Windows Error", 0);
 }

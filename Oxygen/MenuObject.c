@@ -66,8 +66,13 @@ OxMenuClass_Init()
 /* MenuItem -----------------------------------------------------------------------*/
 
 OxMenuItemObject*
-OxMenuItem_New(const char* sCaption, OxCallback fnOnClickCB, OxIconObject* oxIcon)
+OxMenuItem_New(const char* sCaption, OxCallback fnOnClickCB, OxImageObject* oxIcon)
 {
+	if (oxIcon->iType != OxIMAGEFORMAT_ICO) {
+		OxErr_SetString(OxERROR_RUNTIME, "Icon can only be set to an Image of Type Icon.");
+		return NULL;
+	}
+
 	OxMenuItemObject* ox = (OxMenuItemObject*)OxObject_Allocate(&OxMenuItemClass);
 	if (ox == NULL)
 		return NULL;
@@ -104,6 +109,6 @@ OxClass OxMenuItemClass = {
 BOOL
 OxMenuItemClass_Init()
 {
-	Ox_INHERIT_METHODS((&OxMenuItemClass));
+	Ox_INHERIT_METHODS(&OxMenuItemClass);
 	return TRUE;
 }

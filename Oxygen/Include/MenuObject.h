@@ -21,6 +21,7 @@ BOOL OxMenuClass_Init();
 OxAPI OxMenuObject* OxMenu_New(const char* sCaption);
 OxAPI BOOL OxMenu_AppendItem(OxMenuObject* ox, OxObject* oxItem);
 
+
 /* MenuItem -------------------------------------------------------------*/
 
 typedef BOOL(*OxMenuItemCallback)();
@@ -30,7 +31,7 @@ typedef struct _OxMenuItemObject {
 	OxObject_HEAD
 		char* sCaption;
 	UINT_PTR iIdentifier;
-	OxIconObject* oxIcon;
+	OxImageObject* oxIcon;
 	OxMenuItemCallback fnOnClickCB;
 } OxMenuItemObject;
 

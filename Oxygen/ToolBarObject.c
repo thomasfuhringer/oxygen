@@ -32,7 +32,6 @@ OxToolBar_New(OxWidgetObject* oxParent)
 	ox->hImageList = ImageList_Create(iBitmapSize, iBitmapSize, ILC_COLOR16 | ILC_MASK, 1, 20);
 
 	SendMessage(ox->hWin, TB_SETIMAGELIST, (WPARAM)OxTOOLBAR_IMGLST, (LPARAM)ox->hImageList);
-	//SendMessage(ox->hWin, TB_LOADIMAGES, (WPARAM)IDB_STD_SMALL_COLOR, (LPARAM)HINST_COMMCTRL);
 	SendMessage(ox->hWin, TB_BUTTONSTRUCTSIZE, (WPARAM)sizeof(TBBUTTON), 0);
 	/*	TBBUTTON aButtons[1] =
 	{
@@ -44,7 +43,6 @@ OxToolBar_New(OxWidgetObject* oxParent)
 	SendMessage(ox->hWin, TB_SETEXTENDEDSTYLE, 0, (LPARAM)TBSTYLE_EX_MIXEDBUTTONS);
 	ShowWindow(ox->hWin, TRUE);
 
-	//OxToolBar_Reposition(ox);
 	OxAttachObject(&((OxWindowObject*)oxParent)->oxToolBar, ox, FALSE);
 	SetWindowLongPtr(ox->hWin, GWLP_USERDATA, (LONG_PTR)ox);
 	return ox;
@@ -83,7 +81,6 @@ OxToolBar_AppendSeparator(OxToolBarObject* ox)
 BOOL
 OxToolBar_Reposition(OxToolBarObject* ox)
 {
-	//OutputDebugStringA("+-- OxToolBar_Reposition ---\n");
 	SendMessage(ox->hWin, TB_AUTOSIZE, 0, 0);
 	return TRUE;
 }
@@ -105,10 +102,10 @@ OxToolBar_Delete(OxToolBarObject* ox)
 }
 
 OxClass OxToolBarClass = {
-	"ToolBar",               /* sName */
+	"ToolBar",                 /* sName */
 	&OxWidgetClass,            /* pBase */
-	sizeof(OxToolBarObject), /* nSize */
-	OxToolBar_Delete,        /* fnDelete */
+	sizeof(OxToolBarObject),   /* nSize */
+	OxToolBar_Delete,          /* fnDelete */
 	NULL,                      /* pUserData */
 	0                          /* aMethods */
 };

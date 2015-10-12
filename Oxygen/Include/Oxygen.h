@@ -10,6 +10,7 @@
 #define IDC_OXMDIAREA          106
 #define IDC_OXTAB              107
 #define IDC_OXTOOLBAR          108
+#define IDC_OXIMAGEVIEW        109
 
 #define FIRST_CUSTOM_MENU_ID   700
 #define MAX_CUSTOM_MENU_ID     750
@@ -44,8 +45,9 @@
 #include "IntegerObject.h"
 #include "FloatObject.h"
 #include "BoolObject.h"
+#include "BlobObject.h"
+#include "ImageObject.h"
 #include "MenuObject.h"
-#include "IconObject.h"
 #include "WidgetObject.h"
 #include "WindowObject.h"
 #include "MdiWindowObject.h"
@@ -57,9 +59,10 @@
 #include "ApplicationObject.h"
 #include "ButtonObject.h"
 #include "LabelObject.h"
+#include "ImageViewObject.h"
 #include "EntryObject.h"
 
-OxAPI BOOL Oxygen_Init(char* sAppName);
+OxAPI BOOL OxInit(char* sAppName);
 OxAPI void* OxAllocate(size_t nSize);
 OxAPI void* OxReAllocate(void* pChunk, size_t nSize);
 OxAPI BOOL OxFree(void* pChunk);

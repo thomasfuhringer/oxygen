@@ -33,9 +33,6 @@
     <ClInclude Include="Include\Error.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\IconObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Include\IntegerObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -90,6 +87,15 @@
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Include\BlobObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\ImageObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\ImageViewObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ApplicationObject.c">
@@ -108,9 +114,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Error.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="IconObject.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="IntegerObject.c">
@@ -158,6 +161,15 @@
     <ClCompile Include="FloatObject.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="BlobObject.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageObject.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageViewObject.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc">
@@ -166,6 +178,9 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="Oxygen.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Bitmap.bmp">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

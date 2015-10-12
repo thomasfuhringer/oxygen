@@ -15,7 +15,7 @@
     OxStatusBarObject* oxStatusBar; \
 	OxWidgetObject* oxFocusWidget; \
 	OxMdiAreaObject* oxMdiArea; \
-	OxIconObject* oxIcon; \
+	OxImageObject* oxIcon; \
 	BOOL bDeleteOnClose; \
 	BOOL bModal; \
 	OxCallback fnBeforeCloseCB; 
@@ -33,7 +33,7 @@ BOOL OxWindowClass_Init();
 OxAPI OxWindowObject* OxWindow_New(OxWidgetObject* oxParent, OxRect* rc, char* sCaption);
 OxAPI BOOL OxWindow_MoveFocus(OxWindowObject* ox, OxWidgetObject* oxDestinationWidget);
 OxAPI BOOL OxWindow_SetMenu(OxWindowObject* ox, OxMenuObject* oxMenu);
-OxAPI BOOL OxWindow_SetIcon(OxWindowObject* ox, OxIconObject* oxIcon);
+OxAPI BOOL OxWindow_SetIcon(OxWindowObject* ox, OxImageObject* oxIcon);
 OxAPI BOOL OxWindow_ShowModal(OxWindowObject* ox);
 
 BOOL CALLBACK OxSizeEnumProc(HWND hwndChild, LPARAM lParam);

@@ -77,8 +77,12 @@ OxWindow_SetMenu(OxWindowObject* ox, OxMenuObject* oxMenu)
 }
 
 BOOL
-OxWindow_SetIcon(OxWindowObject* ox, OxIconObject* oxIcon)
+OxWindow_SetIcon(OxWindowObject* ox, OxImageObject* oxIcon)
 {
+	if (oxIcon->iType != OxIMAGEFORMAT_ICO) {
+		OxErr_SetString(OxERROR_RUNTIME, "Icon can only be set to an Image of Type Icon.");
+		return FALSE;
+	}
 	OxAttachObject(&ox->oxIcon, oxIcon, FALSE);
 	SendMessage(ox->hWin, WM_SETICON, ICON_SMALL, (LPARAM)ox->oxIcon->hWin);
 	SendMessage(ox->hWin, WM_SETICON, ICON_BIG, (LPARAM)ox->oxIcon->hWin);
@@ -187,7 +191,7 @@ OxWindowClass_Init()
 
 	if (!RegisterClassExW(&wc))
 	{
-		OxErr_SetString(OxERROR_RUNTIME, "Window Registration Failed.");
+		OxErr_SetFromWindows();
 		return FALSE;
 	}
 

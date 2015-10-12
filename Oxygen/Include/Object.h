@@ -13,7 +13,7 @@
 
 #define OxOBJECT_LASTMETHID  	3
 
-#define Ox_INHERIT_METHODS(pClass) memcpy(pClass->aMethods, pClass->pBase->aMethods, sizeof(pClass->aMethods))
+#define Ox_INHERIT_METHODS(pClass) memcpy((pClass)->aMethods, (pClass)->pBase->aMethods, sizeof((pClass)->aMethods))
 
 typedef struct _OxClass OxClass;
 typedef struct _OxObject OxObject;

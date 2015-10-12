@@ -3,7 +3,7 @@
 static HANDLE hHeap;
 
 BOOL
-Oxygen_Init(char* sAppName)
+OxInit(char* sAppName)
 {
 	hHeap = GetProcessHeap();
 	OxApp = OxApplication_New(sAppName, GetModuleHandle(NULL));
@@ -22,13 +22,15 @@ Oxygen_Init(char* sAppName)
 		return FALSE;
 	if (!OxFloatClass_Init())
 		return FALSE;
+	if (!OxBlobClass_Init())
+		return FALSE;
 	if (!OxBoolClass_Init())
 		return FALSE;
 	if (!OxMenuClass_Init())
 		return FALSE;
 	if (!OxMenuItemClass_Init())
 		return FALSE;
-	if (!OxIconClass_Init())
+	if (!OxImageClass_Init())
 		return FALSE;
 	if (!OxWidgetClass_Init())
 		return FALSE;
@@ -53,6 +55,8 @@ Oxygen_Init(char* sAppName)
 	if (!OxEntryClass_Init())
 		return FALSE;
 	if (!OxLabelClass_Init())
+		return FALSE;
+	if (!OxImageViewClass_Init())
 		return FALSE;
 	return TRUE;
 }

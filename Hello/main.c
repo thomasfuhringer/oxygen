@@ -23,7 +23,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
 	UNREFERENCED_PARAMETER(hPrevInstance);
 	UNREFERENCED_PARAMETER(lpCmdLine);
 
-	OxCALL(Oxygen_Init("HOx")); // show error if result of call is FALSE
+	OxCALL(OxInit("HOx")); // show error if result of call is FALSE
 
 	OxRect rc = { .iLeft = 40, .iTop = 30, .iWidth = 600, .iHeight = 400 };
 	OxASSIGN(OxApp->oxWindow = OxWindow_New(NULL, &rc, "Hello Oxygen")); // show error if assigned value is NULL
@@ -36,7 +36,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
 	OxMenuObject* oxMdiWindowsMenu = OxMenu_New("Windows");
 	OxMenuObject* oxHelpMenu = OxMenu_New("Help");
 	OxMenuItemObject* oxMenuItem;
-	OxIconObject* oxIcon = OxIcon_FromFile("Example.ico");// = OxIcon_FromStock(OxICON_OXYGEN);
+	OxImageObject* oxIcon = OxImage_FromFile("Example.ico");// = OxIcon_FromStock(OxICON_OXYGEN);
 	OxASSIGN(oxMenuItem = OxMenuItem_New("About...", AboutCB, oxIcon));
 
 	OxCALL(OxMenu_AppendItem(oxMainMenu, (OxObject*)oxMdiWindowsMenu));
@@ -66,7 +66,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
 	OxWindowClass.aMethods[OxWIDGET_BEFOREDELETE] = WindowBeforeDeleteCB; // subclassing 'light'
 
 	//OxIconObject* oxExampleIcon = OxIcon_FromWindowsResource(IDI_APP);
-	OxIconObject* oxExampleIcon = OxIcon_FromFile("Example.ico");
+	OxImageObject* oxExampleIcon = OxImage_FromFile("Example.ico");
 	//OxCALL(OxWindow_SetIcon(oxMdiWindow, oxExampleIcon));
 
 	rc = (OxRect){ .iLeft = 20, .iTop = 50, .iWidth = -20, .iHeight = -70 };
@@ -93,6 +93,11 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
 	rc.iLeft -= 60; rc.iWidth = 50;
 	pMW->oxLabelQuotient->oxLabel = OxLabel_New((OxWidgetObject*)pMW->oxTabPageDivision, &rc, "Quotient");
 	//OxLabel_SetTextColor(pMW->oxLabelQuotient->oxLabel, 0, 0, 250);
+
+	OxImageObject* oxExampleImage = OxImage_FromFile("Thomas.bmp");
+	//OxImageObject* oxExampleImage = OxImage_FromFile("Example.ico");
+	rc.iTop += 30; rc.iWidth = -150; rc.iHeight = -50;
+	OxImageViewObject* oxImageView = OxImageView_New(pMW->oxTabPageDivision, &rc, oxExampleImage);
 
 	rc = (OxRect){ .iLeft = -110, .iTop = -40, .iWidth = 90, .iHeight = 20 };
 	OxASSIGN(pMW->oxButtonDivide = OxButton_New((OxWidgetObject*)pMW->oxTabPageDivision, &rc, "Divide", ButtonDivideCB));
@@ -155,7 +160,6 @@ AboutCB()
 static BOOL
 WindowBeforeDeleteCB(OxWindowObject* ox) // exit gracefully
 {
-	OutputDebugStringA(ox->pClass->sName);
 	if (ox->pClass == &OxMdiWindowClass) {
 		ClientWindow* pMW = (ClientWindow*)ox->pUserData;
 		OxREL(pMW->oxLabelMultiplication);
