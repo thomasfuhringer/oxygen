@@ -35,36 +35,7 @@ OxTab_New(OxWidgetObject* oxParent, OxRect* rc)
 	SetWindowLongPtr(ox->hWin, GWLP_USERDATA, (LONG_PTR)ox);
 	return ox;
 }
-/*
-OxTabPageObject*
-OxTab_AppendNewPage(OxTabObject* ox, char* sCaption)
-{
-TCITEM tie;
-tie.mask = TCIF_TEXT | TCIF_IMAGE;
-tie.iImage = -1;
-tie.pszText = L"New";
 
-OxTabPageObject* oxPage = OxTabPage_New(ox);
-if (ox == NULL)
-return NULL;
-
-oxPage->iIndex = TabCtrl_InsertItem(ox->hWin, ox->iPages++, &tie);
-if (oxPage->iIndex == -1) {
-OxErr_SetFromWindows();
-return NULL;
-}
-
-if (OxList_AppendItem(ox->oxPages, oxPage) != oxPage->iIndex)
-return NULL;
-/*
-OxRect rc = { .iLeft = 0, .iTop = 0, .iWidth = 0, .iHeight = 0 };
-oxPage->oxBox = OxBox_New(ox, &rc);
-oxPage->oxTab = ox;* /
-
-OutputDebugStringA("+-- OxTab_AppendNewPage\n");
-return ox;
-}
-*/
 static BOOL
 OxTab_Delete(OxTabObject* ox)
 {
@@ -146,8 +117,6 @@ OxTabPage_New(OxTabObject* oxTab, char* sCaption, int iIndex)
 
 	if (OxList_AppendItem(oxTab->oxPages, ox) != ox->iIndex)
 		return NULL;
-
-	//ox->oxTab == oxTab;
 
 	if (oxTab->iPages == 1)
 		OxTabPage_GotSelected(ox);

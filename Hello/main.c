@@ -94,10 +94,12 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
 	pMW->oxLabelQuotient->oxLabel = OxLabel_New((OxWidgetObject*)pMW->oxTabPageDivision, &rc, "Quotient");
 	//OxLabel_SetTextColor(pMW->oxLabelQuotient->oxLabel, 0, 0, 250);
 
-	OxImageObject* oxExampleImage = OxImage_FromFile("Thomas.bmp");
+	OxImageObject* oxExampleImage = OxImage_FromFile("Example.bmp");
 	//OxImageObject* oxExampleImage = OxImage_FromFile("Example.ico");
 	rc.iTop += 30; rc.iWidth = -150; rc.iHeight = -50;
 	OxImageViewObject* oxImageView = OxImageView_New(pMW->oxTabPageDivision, &rc, oxExampleImage);
+	//oxImageView->bFill = TRUE;
+	//oxImageView->bStretch = FALSE;
 
 	rc = (OxRect){ .iLeft = -110, .iTop = -40, .iWidth = 90, .iHeight = 20 };
 	OxASSIGN(pMW->oxButtonDivide = OxButton_New((OxWidgetObject*)pMW->oxTabPageDivision, &rc, "Divide", ButtonDivideCB));

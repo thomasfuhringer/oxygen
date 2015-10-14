@@ -15,7 +15,6 @@ void
 OxErr_SetString(int iType, char* sMessage)
 {
 	OxLastError.iType = iType;
-	//OxLastError.sMessage = sMessage;
 	memcpy(OxLastError.sMessage, sMessage, OxERRMSGMAXBYTES);
 }
 

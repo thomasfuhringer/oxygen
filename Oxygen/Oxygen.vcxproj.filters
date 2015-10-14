@@ -84,9 +84,6 @@
     <ClInclude Include="Include\FloatObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Include\BlobObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -180,7 +177,7 @@
     <Image Include="Oxygen.ico">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="Bitmap.bmp">
+    <Image Include="Placeholder.bmp">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

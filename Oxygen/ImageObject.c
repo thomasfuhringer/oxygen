@@ -80,7 +80,10 @@ OxImage_FromStock(int iStockID)
 static BOOL
 OxImage_Delete(OxImageObject* ox)
 {
-	//DestroyIcon(ox->hWin);
+	if (ox->iType == OxIMAGEFORMAT_BMP)
+		DeleteObject(ox->hWin);
+	else if (ox->iType == OxIMAGEFORMAT_ICO)
+		DestroyIcon(ox->hWin);
 	return pOxClass->pBase->fnDelete(ox);
 }
 

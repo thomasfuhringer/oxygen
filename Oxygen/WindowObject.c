@@ -130,9 +130,9 @@ OxWindow_ShowModal(OxWindowObject* ox)
 		}
 	}
 
-	EnableWindow(OxApp->oxWindow->hWin, TRUE);
 	ShowWindow(ox->hWin, SW_HIDE);
-	ShowWindow(OxApp->oxWindow->hWin, SW_RESTORE);
+	EnableWindow(OxApp->oxWindow->hWin, TRUE);
+	BringWindowToTop(OxApp->oxWindow->hWin);
 	ox->bDeleteOnClose = bDeleteOnClose;
 	return TRUE;
 }

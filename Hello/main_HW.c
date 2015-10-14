@@ -6,7 +6,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
 	UNREFERENCED_PARAMETER(hPrevInstance);
 	UNREFERENCED_PARAMETER(lpCmdLine);
 
-	Oxygen_Init("Hello");
+	OxInit("Hello");
 
 	OxRect rc = { .iLeft = 40, .iTop = 30, .iWidth = 320, .iHeight = 240 };
 	OxApp->oxWindow = OxWindow_New(NULL, &rc, "Powered by Oxygen");

@@ -22,7 +22,7 @@ OxImageView_New(OxWidgetObject* oxParent, OxRect* rc, OxImageObject* oxImage)
 	ox->bFill = FALSE;
 
 	OxWidget_CalculateRect((OxWidgetObject*)ox, rc);
-	ox->hWin = CreateWindowExW(0, szClass, L"",
+	ox->hWin = CreateWindowExW(0, szClass, L"", // WS_EX_CLIENTEDGE
 		WS_CHILD | WS_VISIBLE,
 		rc->iLeft, rc->iTop, rc->iWidth, rc->iHeight,
 		oxParent->hWin, (HMENU)IDC_OXIMAGEVIEW, OxApp->hInstance, NULL);
@@ -89,16 +89,15 @@ BOOL OxImageViewClass_Init()
 
 	if (!RegisterClassExW(&wc))
 	{
-		OxErr_SetString(OxERROR_RUNTIME, "Window Registration Failed.");
+		OxErr_SetFromWindows();
 		return FALSE;
 	}
-	
-	hPlaceholderBitmap = (HBITMAP)LoadImage(OxApp->hDLL, MAKEINTRESOURCE(IDB_PLACEHOLDER), IMAGE_BITMAP, 0, 0, LR_DEFAULTCOLOR);
+
+	hPlaceholderBitmap = (HBITMAP)LoadImageW(OxApp->hDLL, MAKEINTRESOURCE(IDB_PLACEHOLDER), IMAGE_BITMAP, 0, 0, LR_DEFAULTCOLOR);
 	if (hPlaceholderBitmap == NULL){
 		OxErr_SetFromWindows();
 		return FALSE;
 	}
-	Xi("P", hPlaceholderBitmap);
 
 	pOxClass = &OxImageViewClass;
 	Ox_INHERIT_METHODS(pOxClass);
@@ -127,24 +126,26 @@ OxImageViewProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 				if (ox->bFill)
 					StretchBlt(hDC, 0, 0, cxClient, cyClient, hdcMem, 0, 0, bitmap.bmWidth, bitmap.bmHeight, SRCCOPY);
 				else if (ox->bStretch) {
-					double dAspectRatio = cxClient / cyClient;
-					double dPictureAspectRatio = bitmap.bmWidth / bitmap.bmHeight;
+					double dAspectRatio = (double)cxClient / cyClient;
+					double dPictureAspectRatio = (double)bitmap.bmWidth / bitmap.bmHeight;
 
 					if (dPictureAspectRatio > dAspectRatio)
 					{
-						int nNewHeight = (int)(cxClient / dAspectRatio);// self->bitmap.bmWidth * self->bitmap.bmHeight);
-						int nCenteringFactor = (cyClient - nNewHeight) / 2;
-						StretchBlt(hDC, 0, nCenteringFactor, cxClient, nNewHeight, hdcMem, 0, 0, bitmap.bmWidth, bitmap.bmHeight, SRCCOPY);
+						int nNewHeight = (int)(cxClient / dPictureAspectRatio);
+						int iCenteringOffset = (cyClient - nNewHeight) / 2;
+						StretchBlt(hDC, 0, iCenteringOffset, cxClient, nNewHeight, hdcMem, 0, 0, bitmap.bmWidth, bitmap.bmHeight, SRCCOPY);
 					}
 					else if (dPictureAspectRatio < dAspectRatio)
 					{
-						int nNewWidth = (int)(cyClient / dAspectRatio); // self->bitmap.bmHeight * self->bitmap.bmWidth);
-						int nCenteringFactor = (cxClient - nNewWidth) / 2;
-						StretchBlt(hDC, nCenteringFactor, 0, nNewWidth, cyClient, hdcMem, 0, 0, bitmap.bmWidth, bitmap.bmHeight, SRCCOPY);
+						int nNewWidth = (int)(cyClient * dPictureAspectRatio);
+						int iCenteringOffset = (cxClient - nNewWidth) / 2;
+						StretchBlt(hDC, iCenteringOffset, 0, nNewWidth, cyClient, hdcMem, 0, 0, bitmap.bmWidth, bitmap.bmHeight, SRCCOPY);
 					}
 					else
 						StretchBlt(hDC, 0, 0, cxClient, cyClient, hdcMem, 0, 0, bitmap.bmWidth, bitmap.bmHeight, SRCCOPY);
 				}
+				else
+					StretchBlt(hDC, 0, 0, bitmap.bmWidth, bitmap.bmHeight, hdcMem, 0, 0, bitmap.bmWidth, bitmap.bmHeight, SRCCOPY);
 				SelectObject(hdcMem, hbmOld);
 				EndPaint(oxImage->hWin, &paintStruct);
 			}

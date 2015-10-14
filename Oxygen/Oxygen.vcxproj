@@ -173,7 +173,6 @@
     <ClInclude Include="Include\Version.h" />
     <ClInclude Include="Include\WidgetObject.h" />
     <ClInclude Include="Include\WindowObject.h" />
-    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ApplicationObject.c" />
