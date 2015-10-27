@@ -1,5 +1,7 @@
 Oxygen C library
 
+https://github.com/thomasfuhringer/oxygen/
+
 © 2015 by Thomas Führinger 
 thomasfuhringer@live.com
 

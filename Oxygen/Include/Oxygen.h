@@ -56,6 +56,7 @@
 #include "StatusBarObject.h"
 #include "BoxObject.h"
 #include "TabObject.h"
+#include "SplitterObject.h"
 #include "ApplicationObject.h"
 #include "ButtonObject.h"
 #include "LabelObject.h"

@@ -48,6 +48,8 @@ OxInit(char* sAppName)
 		return FALSE;
 	if (!OxTabClass_Init())
 		return FALSE;
+	if (!OxSplitterClass_Init())
+		return FALSE;
 	if (!OxTabPageClass_Init())
 		return FALSE;
 	if (!OxButtonClass_Init())

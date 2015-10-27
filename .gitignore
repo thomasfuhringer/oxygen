@@ -1,0 +1,8 @@
+Debug
+x64
+*.dll
+*.exe
+*.obj
+*.sdf
+*.exp
+*.pdb

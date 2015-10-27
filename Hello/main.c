@@ -9,6 +9,7 @@ typedef struct _ClientWindow {
 	OxLabelObject* oxLabelQuotient;
 	OxButtonObject* oxButtonDivide;
 	OxTabPageObject* oxTabPageMultiplication;
+	OxSplitterObject* oxSplitter;
 	OxLabelObject* oxLabelMultiplication;
 } ClientWindow;
 
@@ -106,8 +107,11 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
 
 	OxASSIGN(pMW->oxTabPageMultiplication = OxTabPage_New(pMW->oxTab, "Multiplication", -1));
 
+	rc = (OxRect){ .iLeft = 5, .iTop = 5, .iWidth = -5, .iHeight = -5 };
+	OxASSIGN(pMW->oxSplitter = OxSplitter_New((OxWidgetObject*)pMW->oxTabPageMultiplication, &rc, -100));
+
 	rc = (OxRect){ .iLeft = 30, .iTop = OxWIDGET_CENTER, .iWidth = -30, .iHeight = 20 };
-	pMW->oxLabelMultiplication = OxLabel_New((OxWidgetObject*)pMW->oxTabPageMultiplication, &rc, "Under Construction");
+	pMW->oxLabelMultiplication = OxLabel_New((OxWidgetObject*)pMW->oxSplitter->oxBox1, &rc, "Under Construction");
 	OxLabel_Align(pMW->oxLabelMultiplication, OxALIGN_HORIZ_CENTER);
 
 	return OxApplication_Run();
@@ -165,6 +169,7 @@ WindowBeforeDeleteCB(OxWindowObject* ox) // exit gracefully
 	if (ox->pClass == &OxMdiWindowClass) {
 		ClientWindow* pMW = (ClientWindow*)ox->pUserData;
 		OxREL(pMW->oxLabelMultiplication);
+		OxREL(pMW->oxSplitter);
 		OxREL(pMW->oxTabPageMultiplication);
 		OxREL(pMW->oxButtonDivide);
 		OxREL(pMW->oxLabelQuotient);

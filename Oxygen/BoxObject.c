@@ -74,11 +74,11 @@ OxBoxClass_Init()
 
 	if (!RegisterClassEx(&wc))
 	{
-		OxErr_SetString(OxERROR_RUNTIME, "Window Registration Failed.");
+		OxErr_SetFromWindows();
 		return FALSE;
 	}
-    
-    pOxClass = &OxBoxClass;
+
+	pOxClass = &OxBoxClass;
 	Ox_INHERIT_METHODS(pOxClass);
 	return TRUE;
 }

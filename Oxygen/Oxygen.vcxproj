@@ -166,6 +166,7 @@
     <ClInclude Include="Include\Object.h" />
     <ClInclude Include="Include\Oxygen.h" />
     <ClInclude Include="Include\resource.h" />
+    <ClInclude Include="Include\SplitterObject.h" />
     <ClInclude Include="Include\StatusBarObject.h" />
     <ClInclude Include="Include\StringObject.h" />
     <ClInclude Include="Include\TabObject.h" />
@@ -193,6 +194,7 @@
     <ClCompile Include="MenuObject.c" />
     <ClCompile Include="Object.c" />
     <ClCompile Include="Oxygen.c" />
+    <ClCompile Include="SplitterObject.c" />
     <ClCompile Include="StatusBarObject.c" />
     <ClCompile Include="StringObject.c" />
     <ClCompile Include="TabObject.c" />
