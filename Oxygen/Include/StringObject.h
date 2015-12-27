@@ -19,4 +19,4 @@ OxAPI char* OxString_AsString(OxStringObject* ox, const char* sFormat);
 OxAPI LPWSTR OxString_AsWide(OxStringObject* ox);
 OxAPI BOOL OxString_Compare(OxStringObject* ox, OxObject* ox2, int iOperator);
 
-#endif /* OxSTRINGOBJECT_H */
+#endif

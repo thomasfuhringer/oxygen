@@ -6,3 +6,7 @@ x64
 *.sdf
 *.exp
 *.pdb
+*.res
+*.log
+*.tlog
+*.lastbuildstate

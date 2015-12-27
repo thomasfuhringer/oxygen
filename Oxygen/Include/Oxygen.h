@@ -61,9 +61,11 @@
 #include "ButtonObject.h"
 #include "LabelObject.h"
 #include "ImageViewObject.h"
+#include "VideoViewObject.h"
 #include "EntryObject.h"
 
 OxAPI BOOL OxInit(char* sAppName);
+OxAPI BOOL OxExit(void);
 OxAPI void* OxAllocate(size_t nSize);
 OxAPI void* OxReAllocate(void* pChunk, size_t nSize);
 OxAPI BOOL OxFree(void* pChunk);
@@ -74,7 +76,7 @@ OxAPI BOOL OxStringAppend(char* sMain, const char* sAppendix);
 char* OxDuplicateString(const char* sString);
 OxAPI char* OxGetWindowText(HWND hWin);
 
-OxAPI void XX(OxObject* oxObject); // for debugging
+OxAPI void XX(OxObject* oxObject);     // for debugging
 OxAPI void Xi(char* sContext, int a);
 
 extern OxAPI char* OxCopyright;

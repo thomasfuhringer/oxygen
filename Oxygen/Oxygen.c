@@ -60,6 +60,24 @@ OxInit(char* sAppName)
 		return FALSE;
 	if (!OxImageViewClass_Init())
 		return FALSE;
+	if (!OxVideoViewClass_Init())
+		return FALSE;
+        
+        
+	// Initialize the COM library.
+	HRESULT hr = CoInitializeEx(NULL, COINIT_MULTITHREADED);
+	if (FAILED(hr))
+	{
+				OxErr_SetStringFormat(OxERROR_WINDOWS, "Can not initialize the COM library. Error # %d", hr);
+		return FALSE;
+	}    
+	return TRUE;
+}
+
+BOOL
+OxExit(void)
+{
+	CoUninitialize();
 	return TRUE;
 }
 

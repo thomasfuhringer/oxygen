@@ -18,7 +18,6 @@ OxTab_New(OxWidgetObject* oxParent, OxRect* rc)
 	ox->hWin = CreateWindowExW(0, WC_TABCONTROL, L"",
 		WS_CHILD | WS_CLIPSIBLINGS | WS_VISIBLE,// | TCS_BOTTOM,
 		rc->iLeft, rc->iTop, rc->iWidth, rc->iHeight,
-		//10, 50, 300, 200,
 		oxParent->hWin, (HMENU)IDC_OXTAB, OxApp->hInstance, NULL);
 
 	if (ox->hWin == NULL) {
@@ -91,7 +90,7 @@ OxTabProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 }
 
 
-/* TabPage -----------------------------------------------------------------------*/
+// - TabPage -----------------------------------------------------------------------
 
 OxTabPageObject*
 OxTabPage_New(OxTabObject* oxTab, char* sCaption, int iIndex)
@@ -120,6 +119,9 @@ OxTabPage_New(OxTabObject* oxTab, char* sCaption, int iIndex)
 
 	if (oxTab->iPages == 1)
 		OxTabPage_GotSelected(ox);
+	else
+		OxWidget_ShowV(ox, FALSE);
+
 	return ox;
 }
 

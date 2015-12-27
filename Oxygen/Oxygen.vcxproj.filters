@@ -93,6 +93,12 @@
     <ClInclude Include="Include\ImageViewObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Include\SplitterObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\VideoViewObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ApplicationObject.c">
@@ -165,6 +171,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ImageViewObject.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SplitterObject.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="VideoViewObject.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

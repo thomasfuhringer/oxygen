@@ -49,7 +49,7 @@ OxList_GetItem(OxListObject* ox, size_t nIndex)
 {
 	if (nIndex < 0 || nIndex >= ox->nSize) {
 		OxErr_SetStringFormat(OxERROR_RUNTIME, "List index %d out of range. List contains only %d items.", nIndex, ox->nSize);
-		return FALSE;
+		return NULL;
 	}
 	return ox->oxItems[nIndex];
 }

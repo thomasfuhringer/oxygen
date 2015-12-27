@@ -172,6 +172,7 @@
     <ClInclude Include="Include\TabObject.h" />
     <ClInclude Include="Include\ToolBarObject.h" />
     <ClInclude Include="Include\Version.h" />
+    <ClInclude Include="Include\VideoViewObject.h" />
     <ClInclude Include="Include\WidgetObject.h" />
     <ClInclude Include="Include\WindowObject.h" />
   </ItemGroup>
@@ -199,6 +200,7 @@
     <ClCompile Include="StringObject.c" />
     <ClCompile Include="TabObject.c" />
     <ClCompile Include="ToolBarObject.c" />
+    <ClCompile Include="VideoViewObject.c" />
     <ClCompile Include="WidgetObject.c" />
     <ClCompile Include="WindowObject.c" />
   </ItemGroup>
