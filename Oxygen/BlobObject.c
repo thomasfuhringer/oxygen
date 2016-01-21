@@ -17,7 +17,7 @@ OxBlob_New(size_t nSize)
 }
 
 OxBlobObject*
-OxBlob_FromString(const char* sString)
+OxBlob_FromString(const char* sString, const char* sFormat)
 {
 	OxBlobObject* ox;
 	if (sString == NULL) {

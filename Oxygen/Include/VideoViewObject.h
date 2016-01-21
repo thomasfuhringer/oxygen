@@ -9,7 +9,7 @@
 
 typedef struct _OxVideoViewObject {
 	OxWidgetObject_HEAD
-	BOOL bStretch;
+		BOOL bStretch;
 	BOOL bFill;
 	IGraphBuilder *pGraph;
 	IMediaControl *pControl;

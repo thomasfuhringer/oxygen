@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\Hoedown">
+      <UniqueIdentifier>{403574bb-e734-436e-bf99-cb20783eb5b4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\ApplicationObject.h">
@@ -99,6 +102,36 @@
     <ClInclude Include="Include\VideoViewObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Include\HtmlViewObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\MarkDownEntryObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Hoedown\autolink.h">
+      <Filter>Source Files\Hoedown</Filter>
+    </ClInclude>
+    <ClInclude Include="Hoedown\buffer.h">
+      <Filter>Source Files\Hoedown</Filter>
+    </ClInclude>
+    <ClInclude Include="Hoedown\common.h">
+      <Filter>Source Files\Hoedown</Filter>
+    </ClInclude>
+    <ClInclude Include="Hoedown\document.h">
+      <Filter>Source Files\Hoedown</Filter>
+    </ClInclude>
+    <ClInclude Include="Hoedown\escape.h">
+      <Filter>Source Files\Hoedown</Filter>
+    </ClInclude>
+    <ClInclude Include="Hoedown\html.h">
+      <Filter>Source Files\Hoedown</Filter>
+    </ClInclude>
+    <ClInclude Include="Hoedown\stack.h">
+      <Filter>Source Files\Hoedown</Filter>
+    </ClInclude>
+    <ClInclude Include="Hoedown\version.h">
+      <Filter>Source Files\Hoedown</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ApplicationObject.c">
@@ -178,6 +211,39 @@
     </ClCompile>
     <ClCompile Include="VideoViewObject.c">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HtmlViewObject.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MarkDownEntryObject.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Hoedown\autolink.c">
+      <Filter>Source Files\Hoedown</Filter>
+    </ClCompile>
+    <ClCompile Include="Hoedown\buffer.c">
+      <Filter>Source Files\Hoedown</Filter>
+    </ClCompile>
+    <ClCompile Include="Hoedown\document.c">
+      <Filter>Source Files\Hoedown</Filter>
+    </ClCompile>
+    <ClCompile Include="Hoedown\escape.c">
+      <Filter>Source Files\Hoedown</Filter>
+    </ClCompile>
+    <ClCompile Include="Hoedown\html.c">
+      <Filter>Source Files\Hoedown</Filter>
+    </ClCompile>
+    <ClCompile Include="Hoedown\html_blocks.c">
+      <Filter>Source Files\Hoedown</Filter>
+    </ClCompile>
+    <ClCompile Include="Hoedown\html_smartypants.c">
+      <Filter>Source Files\Hoedown</Filter>
+    </ClCompile>
+    <ClCompile Include="Hoedown\stack.c">
+      <Filter>Source Files\Hoedown</Filter>
+    </ClCompile>
+    <ClCompile Include="Hoedown\version.c">
+      <Filter>Source Files\Hoedown</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

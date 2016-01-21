@@ -1,5 +1,5 @@
-// main.c  | Oxygen test program © 2015 by Thomas Führinger
-#include "Oxygen.h"
+﻿// main.c  | Oxygen test program © 2015 by Thomas Führinger
+#include <Oxygen.h>
 
 typedef struct _ClientWindow {
 	OxTabObject* oxTab;
@@ -15,6 +15,8 @@ typedef struct _ClientWindow {
 	OxButtonObject* oxButtonPlay;
 	OxSplitterObject* oxSplitter;
 	OxLabelObject* oxLabelMultiplication;
+	OxTabPageObject* oxTabPageBrowser;
+	OxHtmlViewObject* oxHtmlView;
 } ClientWindow;
 
 // forward declarations
@@ -42,7 +44,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
 	OxMenuObject* oxMdiWindowsMenu = OxMenu_New("Windows");
 	OxMenuObject* oxHelpMenu = OxMenu_New("Help");
 	OxMenuItemObject* oxMenuItem;
-	OxImageObject* oxIcon = OxImage_FromFile("Example.ico");// = OxIcon_FromStock(OxICON_OXYGEN);
+	OxImageObject* oxIcon;
+	OxASSIGN(oxIcon = OxImage_FromFile("Example.ico"));// = OxIcon_FromStock(OxICON_OXYGEN);
 	OxASSIGN(oxMenuItem = OxMenuItem_New("About...", AboutCB, oxIcon));
 
 	OxCALL(OxMenu_AppendItem(oxMainMenu, (OxObject*)oxMdiWindowsMenu));
@@ -51,7 +54,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
 	OxCALL(OxWindow_SetMenu(OxApp->oxWindow, oxMainMenu));
 
 	OxToolBarObject* oxToolBar = OxToolBar_New((OxWidgetObject*)OxApp->oxWindow);
-	//XX(oxToolBar);
 	OxCALL(OxToolBar_AppendItem(oxToolBar, oxMenuItem));
 	int iTB = OxToolBar_GetHeight(oxToolBar);
 
@@ -105,7 +107,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
 
 	OxASSIGN(pMW->oxTabPageMultiplication = OxTabPage_New(pMW->oxTab, "Multiplication", -1));
 	rc = (OxRect){ .iLeft = 30, .iTop = OxWIDGET_CENTER, .iWidth = -30, .iHeight = 20 };
-	pMW->oxLabelMultiplication = OxLabel_New((OxWidgetObject*)pMW->oxTabPageMultiplication, &rc, "Under Construction");
+	pMW->oxLabelMultiplication = OxLabel_New((OxWidgetObject*)pMW->oxTabPageMultiplication, &rc, "This page intentionally left blank."); // Under Construction
 	OxLabel_Align(pMW->oxLabelMultiplication, OxALIGN_HORIZ_CENTER);
 
 	OxASSIGN(pMW->oxTabPageVideo = OxTabPage_New(pMW->oxTab, "Views", -1));
@@ -120,12 +122,19 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
 	//oxImageView->bStretch = FALSE;
 
 	rc = (OxRect){ .iLeft = 10, .iTop = 10, .iWidth = -10, .iHeight = -40 };
-	OxASSIGN(pMW->oxVideoView = OxVideoView_New((OxWidgetObject*)pMW->oxSplitter->oxBox2, &rc, -100));
+	OxASSIGN(pMW->oxVideoView = OxVideoView_New((OxWidgetObject*)pMW->oxSplitter->oxBox2, &rc));
 	rc = (OxRect){ .iLeft = 10, .iTop = -30, .iWidth = -110, .iHeight = 20 };
 	OxASSIGN(pMW->oxEntryFile = OxEntry_New((OxWidgetObject*)pMW->oxSplitter->oxBox2, &rc));
-	OxCALL(OxWidget_SetDataV(pMW->oxEntryFile, OxString_FromString("C:\\PathTo\\Test.avi", NULL)));
+	OxCALL(OxWidget_SetDataV(pMW->oxEntryFile, OxString_FromString("C:\\PathTo\\Example.avi", NULL)));
 	rc = (OxRect){ .iLeft = -100, .iTop = -30, .iWidth = 90, .iHeight = 20 };
 	OxASSIGN(pMW->oxButtonPlay = OxButton_New((OxWidgetObject*)pMW->oxSplitter->oxBox2, &rc, "Play", ButtonPlayCB));
+
+	OxASSIGN(pMW->oxTabPageBrowser = OxTabPage_New(pMW->oxTab, "Browse", -1));
+	rc = (OxRect){ .iLeft = 10, .iTop = 10, .iWidth = -10, .iHeight = -10 };
+	OxASSIGN(pMW->oxHtmlView = OxHtmlView_New((OxWidgetObject*)pMW->oxTabPageBrowser, &rc));
+	//OxCALL(OxWidget_SetDataV(pMW->oxHtmlView, OxString_FromString("<H2><CENTER>Hello HTML</CENTER></H2><P><FONT COLOR=RED>This is a <U>HTML string</U> in memory.</FONT>", NULL)));
+	OxCALL(OxHtmlView_RenderURL(pMW->oxHtmlView, "https://la.m.wikipedia.org/wiki/Computatrum"));
+	//OxCALL(OxHtmlView_RenderURL(pMW->oxHtmlView, "https://duckduckgo.com/"));
 
 	return OxApplication_Run();
 }
@@ -204,6 +213,10 @@ WindowBeforeDeleteCB(OxWindowObject* ox) // exit gracefully
 		OxREL(pMW->oxEntryFile);
 		OxREL(pMW->oxVideoView);
 		OxREL(pMW->oxTabPageVideo);
+
+		OxREL(pMW->oxHtmlView);
+		OxREL(pMW->oxTabPageBrowser);
+
 		OxREL(pMW->oxTab);
 		OxFree(pMW);
 

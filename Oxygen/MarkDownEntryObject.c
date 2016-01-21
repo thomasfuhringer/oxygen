@@ -32,7 +32,7 @@ static BOOL
 OxMarkDownEntry_Reposition(OxMarkDownEntryObject* ox)
 {
 
-return FALSE;
+return TRUE;
 }
 */
 BOOL

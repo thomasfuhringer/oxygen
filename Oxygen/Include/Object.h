@@ -45,9 +45,9 @@ OxAPI BOOL OxObjectClass_Init();
 OxAPI OxObject* OxObject_Allocate(OxClass* pClass);
 OxAPI OxObject* OxObject_New();
 OxAPI BOOL OxObject_RefCountIncrease(OxObject* ox);
-OxAPI BOOL OxObject_RefCountDecrease(OxObject* ox);
+OxAPI BOOL OxObject_RefCountDecrease(OxObject** ox);
 #define OxRET(ox) OxObject_RefCountIncrease((OxObject*)ox)
-#define OxREL(ox) OxObject_RefCountDecrease((OxObject*)ox)
+#define OxREL(ox) OxObject_RefCountDecrease((OxObject**)&ox)
 OxAPI OxObject* OxObject_FromStringV(OxClass* pClass, const char* sString, const char* sFormat);
 OxAPI char* OxObject_AsStringV(OxObject* ox, const char* sFormat);
 OxAPI char* OxObject_Represent(OxObject* ox);

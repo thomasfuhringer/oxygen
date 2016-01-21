@@ -11,7 +11,6 @@ OxWindow_New(OxWidgetObject* oxParent, OxRect* rc, char* sCaption)
 	OxWindowObject* ox = (OxWindowObject*)OxObject_Allocate(pOxClass);
 	if (ox == NULL)
 		return NULL;
-	//OutputDebugStringA(ox->pClass->sName);
 
 	if (!OxWidget_Init((OxWidgetObject*)ox, oxParent, rc))
 		return NULL;
@@ -42,6 +41,11 @@ OxWindow_New(OxWidgetObject* oxParent, OxRect* rc, char* sCaption)
 	if (ox->hWin == NULL) {
 		OxErr_SetFromWindows();
 		return NULL;
+	}
+
+	if (OxApp->oxIcon) {   // use app icon if set
+		SendMessage(ox->hWin, WM_SETICON, ICON_SMALL, (LPARAM)OxApp->oxIcon->hWin);
+		SendMessage(ox->hWin, WM_SETICON, ICON_BIG, (LPARAM)OxApp->oxIcon->hWin);
 	}
 
 	SetWindowLongPtr(ox->hWin, GWLP_USERDATA, (LONG_PTR)ox);
@@ -140,7 +144,7 @@ OxWindow_ShowModal(OxWindowObject* ox)
 static BOOL
 OxWindow_Reposition(OxWindowObject* ox)
 {
-	EnumChildWindows(ox->hWin, OxSizeEnumProc, 0);
+	EnumChildWindows(ox->hWin, OxSizeEnumProc, (LPARAM)ox);
 	return TRUE;
 }
 

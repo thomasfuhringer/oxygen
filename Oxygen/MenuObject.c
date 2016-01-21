@@ -26,6 +26,7 @@ OxMenu_AppendItem(OxMenuObject* ox, OxObject* oxItem)
 	if (oxItem->pClass == &OxMenuItemClass) {
 		szCaption = OxToW(((OxMenuItemObject*)oxItem)->sCaption);
 		AppendMenuW(ox->hWin, MF_STRING, ((OxMenuItemObject*)oxItem)->iIdentifier, szCaption);
+		((OxMenuItemObject*)oxItem)->oxMenu = ox;
 	}
 	else if (oxItem->pClass == &OxMenuClass) {
 		szCaption = OxToW(((OxMenuObject*)oxItem)->sCaption);
@@ -63,12 +64,12 @@ OxMenuClass_Init()
 	return TRUE;
 }
 
-/* MenuItem -----------------------------------------------------------------------*/
+// MenuItem -------------------------------------------------------------------------
 
 OxMenuItemObject*
 OxMenuItem_New(const char* sCaption, OxCallback fnOnClickCB, OxImageObject* oxIcon)
 {
-	if (oxIcon->iType != OxIMAGEFORMAT_ICO) {
+	if (oxIcon && oxIcon->iType != OxIMAGEFORMAT_ICO) {
 		OxErr_SetString(OxERROR_RUNTIME, "Icon can only be set to an Image of Type Icon.");
 		return NULL;
 	}
@@ -88,6 +89,16 @@ OxMenuItem_New(const char* sCaption, OxCallback fnOnClickCB, OxImageObject* oxIc
 	ox->oxIcon = oxIcon;
 
 	return ox;
+}
+
+BOOL
+OxMenuItem_SetEnabled(OxMenuItemObject* ox, BOOL bEnabled)
+{
+	if (ox->oxMenu)
+		EnableMenuItem(ox->oxMenu->hWin, ox->iIdentifier, MF_BYCOMMAND | (bEnabled ? MF_ENABLED : MF_DISABLED));
+	if (ox->oxToolBar)
+		SendMessage(ox->oxToolBar->hWin, TB_ENABLEBUTTON, ox->iIdentifier, bEnabled);
+	return TRUE;
 }
 
 static BOOL

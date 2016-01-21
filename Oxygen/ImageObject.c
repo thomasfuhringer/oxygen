@@ -1,4 +1,10 @@
 ﻿// ImageObject.c  | Oxygen © 2015 by Thomas Führinger
+
+// ToDo: reimplement on GDI+ to facilitate JPEG, etc.
+//       resources:
+//       http://www.jose.it-berater.org/gdiplus/iframe/index.htm
+//       https://github.com/mity/mctrl/blob/master/src/imgview.c
+
 #include "Oxygen.h"
 
 static OxClass* pOxClass;
@@ -20,11 +26,9 @@ OxImage_FromFile(const char* sFileName)
 			return NULL;
 		}
 		ox->iType = OxIMAGEFORMAT_ICO;
-		//OutputDebugStringW(L"XXXXX");
 	}
 	else if (lstrcmpi(szExtension, L".bmp") == 0) {
 		ox->hWin = (HBITMAP)LoadImageW(NULL, szFileName, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
-		//GetObject(self->hBitmap, sizeof(BITMAP), &self->bitmap);
 
 		if (ox->hWin == 0) {
 			OxErr_SetFromWindows();
@@ -49,14 +53,13 @@ OxImage_FromWindowsResource(WORD wResourceID)
 	OxImageObject* ox = (OxImageObject*)OxObject_Allocate(pOxClass);
 	if (ox == NULL)
 		return NULL;
-
 	ox->hWin = LoadIconW(OxApp->hInstance, MAKEINTRESOURCE(wResourceID));
 
 	if (ox->hWin == 0) {
 		OxErr_SetFromWindows();
 		return NULL;
 	}
-	//SetWindowLongPtr(ox->hWin, GWLP_USERDATA, (LONG_PTR)ox);
+	ox->iType = OxIMAGEFORMAT_ICO;
 	return ox;
 }
 
@@ -67,13 +70,34 @@ OxImage_FromStock(int iStockID)
 	if (ox == NULL)
 		return NULL;
 
-	ox->hWin = LoadIconW(OxApp->hDLL, MAKEINTRESOURCE(iStockID));
+	switch (iStockID)
+	{
+	case OxICON_OXYGEN:
+		ox->hWin = OxApp->hIcon;
+		break;
+
+	case OxICON_FILEOPEN:
+		ox->hWin = ExtractIconW(OxApp->hInstance, L"SHELL32.DLL", -235);
+		//uInt = ExtractIconEx("%SystemRoot%\\system32\\SHELL32.dll" , -235, &ox->hWin, NULL, 1);
+		break;
+
+	case OxICON_REFRESH:
+		ox->hWin = ExtractIconW(OxApp->hInstance, L"SHELL32.DLL", -16739);
+		break;
+
+	case OxICON_SAVE:
+		ox->hWin = ExtractIconW(OxApp->hInstance, L"SHELL32.DLL", -16761);
+		break;
+
+	default:
+		ox->hWin = OxApp->hIcon;
+	}
 
 	if (ox->hWin == 0) {
 		OxErr_SetFromWindows();
 		return NULL;
 	}
-	//SetWindowLongPtr(ox->hWin, GWLP_USERDATA, (LONG_PTR)ox);
+	ox->iType = OxIMAGEFORMAT_ICO;
 	return ox;
 }
 

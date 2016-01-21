@@ -24,5 +24,6 @@ extern char* OxErrorType[];
 OxAPI void OxErr_SetString(int iType, char* sMessage);
 OxAPI void OxErr_SetStringFormat(int iType, const char *sFormat, ...);
 OxAPI void OxErr_SetFromWindows();
+OxAPI void OxErr_SetFromWindowsHR(HRESULT hr);
 OxAPI void OxErr_Clear();
 #endif /* OxERROR_H */

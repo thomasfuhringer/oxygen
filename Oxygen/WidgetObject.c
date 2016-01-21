@@ -49,7 +49,7 @@ BOOL
 OxWidget_CalculateRect(OxWidgetObject* ox, OxRect* rc)
 {
 	RECT rcParent;
-	GetClientRect(ox->oxParent == NULL ? 0 : ox->oxParent->hWin, &rcParent);
+	GetClientRect(ox->oxParent == NULL ? GetDesktopWindow() : ox->oxParent->hWin, &rcParent);
 	if (ox->rc.iLeft == OxWIDGET_CENTER)
 		rc->iLeft = (rcParent.right - ox->rc.iWidth) / 2;
 	else
@@ -109,8 +109,9 @@ OxWidget_SetDataV(OxWidgetObject* ox, OxObject* oxData)
 BOOL CALLBACK
 OxSizeEnumProc(HWND hwndChild, LPARAM lParam)
 {
+	//OxWidgetObject* oxParent = (OxWidgetObject*)lParam;
 	OxWidgetObject* oxWidget = (OxWidgetObject*)GetWindowLongPtr(hwndChild, GWLP_USERDATA);
-	if (oxWidget)
+	if (oxWidget && IsWindow(oxWidget->hWin))  // IWebBrowser2 creates some weird window in the top level window
 	{
 		//char* sString = OxObject_RepresentV(oxWidget); OutputDebugStringA(sString); OxFree(sString); OutputDebugStringA("\n");
 		return OxWidget_RepositionV(oxWidget);
@@ -129,7 +130,7 @@ OxWidget_Reposition(OxWidgetObject* ox)
 		return FALSE;
 	}
 	else
-		EnumChildWindows(ox->hWin, OxSizeEnumProc, 0);
+		EnumChildWindows(ox->hWin, OxSizeEnumProc, (LPARAM)ox);
 	return TRUE;
 }
 
@@ -195,7 +196,8 @@ OxWidgetReleaseEnumProc(HWND hwndChild, LPARAM lParam)
 static BOOL
 OxWidget_ReleaseChildren(OxWidgetObject* ox)
 {
-	EnumChildWindows(ox->hWin, OxWidgetReleaseEnumProc, 0);
+	if (ox->hWin)
+		EnumChildWindows(ox->hWin, OxWidgetReleaseEnumProc, 0);
 	return TRUE;
 };
 

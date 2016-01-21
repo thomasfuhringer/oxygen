@@ -51,7 +51,6 @@ OxMdiArea_SetMenu(OxMdiAreaObject* ox, OxMenuObject* oxMenu)
 static BOOL
 OxMdiArea_Delete(OxObject* ox)
 {
-	// RefDown(...);  
 	return ox->pClass->pBase->fnDelete(ox);
 }
 

@@ -1,12 +1,10 @@
 Debug
 x64
-*.dll
-*.exe
 *.obj
 *.sdf
 *.exp
 *.pdb
-*.res
 *.log
 *.tlog
 *.lastbuildstate
+GTK

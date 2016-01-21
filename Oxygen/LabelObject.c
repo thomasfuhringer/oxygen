@@ -21,6 +21,8 @@ OxLabel_New(OxWidgetObject* oxParent, OxRect* rc, char* sCaption)
 
 	LPWSTR szCaption = OxToW(sCaption); //...
 
+	OxRect rect;
+	rc = &rect;
 	OxWidget_CalculateRect((OxWidgetObject*)ox, rc);
 	ox->hWin = CreateWindowExW(0, L"STATIC", szCaption,
 		WS_CHILD | WS_VISIBLE,

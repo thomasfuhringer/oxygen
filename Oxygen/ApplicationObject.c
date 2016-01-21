@@ -1,22 +1,4 @@
 ﻿// ApplicationObject.c  | Oxygen © 2015 by Thomas Führinger
-#pragma warning(disable : 4100)
-
-#ifndef WINVER                  // Minimum platform is Windows XP
-#define WINVER 0x0501
-#endif
-
-#ifndef _WIN32_WINNT            // Minimum platform is Windows XP
-#define _WIN32_WINNT 0x0501
-#endif
-
-#ifndef _WIN32_WINDOWS          // Minimum platform is Windows XP
-#define _WIN32_WINDOWS 0x0501
-#endif
-
-#pragma once
-#pragma execution_character_set("utf-8")
-
-#define WIN32_LEAN_AND_MEAN             // Exclude rarely-used stuff from Windows headers
 
 #include "Oxygen.h"
 #include "Resource.h"
@@ -33,15 +15,24 @@ OxApplication_New(char* sName, HINSTANCE hInstance)
 		ox->hInstance = hInstance;
 		ox->hDLL = LoadLibraryA(OxDLLFILE);
 		if (ox->hDLL == 0) {
+			ox->hDLL = hInstance; // statically linked...
+		}
+		ox->hDLLcomctl32 = GetModuleHandleA("COMCTL32.DLL");
+		if (ox->hDLLcomctl32 == 0) {
 			OxErr_SetFromWindows();
 			return NULL;
 		}
+#ifndef OxSTATIC
 		ox->hIcon = LoadIconW(ox->hDLL, MAKEINTRESOURCE(IDI_OXYGEN));
+#else
+		ox->hIcon = ExtractIconW(hInstance, L"SHELL32.DLL", -3);
+#endif
 		if (ox->hIcon == 0) {
 			OxErr_SetFromWindows();
 			return NULL;
 		}
 		ox->oxWindow = NULL;
+		ox->oxIcon = NULL;
 		ox->sStateID = NULL;
 		ox->hDefaultFont = GetStockObject(DEFAULT_GUI_FONT);
 		return ox;

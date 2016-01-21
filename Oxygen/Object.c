@@ -8,9 +8,9 @@ OxObject* OxNull;              // global singleton
 OxObject*
 OxObject_Allocate(OxClass* pClass)
 {
-	OxObject* ox = (OxObject*)OxAllocate(pClass->nSize);
+	OxObject* ox = (OxObject*)OxAllocateZeroed(pClass->nSize);
 	if (ox != NULL) {
-		memset(ox, 0, pClass->nSize);
+		//memset(ox, 0, pClass->nSize);
 		ox->iRefCount = 1;
 		ox->pClass = pClass;
 		return ox;
@@ -41,13 +41,16 @@ OxObject_RefCountIncrease(OxObject* ox)
 }
 
 BOOL
-OxObject_RefCountDecrease(OxObject* ox)
+OxObject_RefCountDecrease(OxObject** ox)
 {
-	if (ox == NULL || ox->iRefCount < 1)
+	BOOL bResult = TRUE;
+	if (*ox == NULL || (*ox)->iRefCount < 1)
 		return TRUE;
-	if (--ox->iRefCount == 0)
-		return ox->pClass->fnDelete(ox);
-	return TRUE;
+	if (--(*ox)->iRefCount == 0) {
+		bResult = (*ox)->pClass->fnDelete(*ox);
+		*ox = NULL;
+	}
+	return bResult;
 }
 
 OxObject*

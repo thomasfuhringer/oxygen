@@ -15,7 +15,7 @@ typedef struct _OxSplitterObject {
 
 extern OxAPI OxClass OxSplitterClass;
 
-BOOL OxBoxClass_Init();
+BOOL OxSplitterClass_Init();
 OxAPI OxSplitterObject* OxSplitter_New(OxWidgetObject* oxParent, OxRect* rc);
 OxAPI BOOL OxSplitter_SetPosition(OxSplitterObject* ox, int iPosition);
 

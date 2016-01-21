@@ -22,6 +22,8 @@ OxBox_Init(OxBoxObject* ox, OxWidgetObject* oxParent, OxRect* rc)
 	if (!OxWidget_Init((OxWidgetObject*)ox, oxParent, rc))
 		return NULL;
 
+	OxRect rect;
+	rc = &rect;
 	OxWidget_CalculateRect((OxWidgetObject*)ox, rc);
 	ox->hWin = CreateWindowExW(0, szBoxClass, L"", // WS_EX_CLIENTEDGE
 		WS_CHILD | WS_CLIPSIBLINGS | WS_TABSTOP | WS_VISIBLE,

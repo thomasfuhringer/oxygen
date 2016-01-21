@@ -9,7 +9,6 @@ OxInit(char* sAppName)
 	OxApp = OxApplication_New(sAppName, GetModuleHandle(NULL));
 	if (OxApp == NULL)
 		return FALSE;
-
 	if (!OxObjectClass_Init())
 		return FALSE;
 	if (!OxApplicationClass_Init())
@@ -62,22 +61,35 @@ OxInit(char* sAppName)
 		return FALSE;
 	if (!OxVideoViewClass_Init())
 		return FALSE;
-        
-        
-	// Initialize the COM library.
+	if (!OxHtmlViewClass_Init())
+		return FALSE;
+	if (!OxMarkDownEntryClass_Init())
+		return FALSE;
+
+	/*/ Initialize the COM library.
 	HRESULT hr = CoInitializeEx(NULL, COINIT_MULTITHREADED);
 	if (FAILED(hr))
 	{
-				OxErr_SetStringFormat(OxERROR_WINDOWS, "Can not initialize the COM library. Error # %d", hr);
+	OxErr_SetStringFormat(OxERROR_WINDOWS, "Can not initialize the COM library. Error # %d", hr);
+	return FALSE;
+	}*/
+
+	// Initialize the OLE library.
+	HRESULT hr = OleInitialize(NULL);
+	if (FAILED(hr))
+	{
+		OxErr_SetStringFormat(OxERROR_WINDOWS, "Can not initialize the OLE library. Error # %d", hr);
 		return FALSE;
-	}    
+	}
+
 	return TRUE;
 }
 
 BOOL
 OxExit(void)
 {
-	CoUninitialize();
+	//CoUninitialize();
+	OleUninitialize();
 	return TRUE;
 }
 
@@ -95,6 +107,15 @@ OxAllocate(size_t nSize)
 	}
 	else
 		return pChunk;
+}
+
+void*
+OxAllocateZeroed(size_t nSize)
+{
+	void* pChunk = OxAllocate(nSize);
+	if (pChunk)
+		ZeroMemory(pChunk, nSize);
+	return pChunk;
 }
 
 void*
@@ -225,6 +246,46 @@ OxGetWindowText(HWND hWin)
 	char* sText = OxToU8(szText);
 	OxFree(szText);
 	return sText;
+}
+
+char*
+OxLoadFile(char* sFileNamePath)
+{
+	char* sMD = NULL;
+
+	FILE* fp;
+	//_wfopen_s(&fp, sFileNamePath, "r");
+	fopen_s(&fp, sFileNamePath, "r");
+	if (fp != NULL) {
+		if (fseek(fp, 0L, SEEK_END) == 0) {
+			long bufsize = ftell(fp);
+			if (bufsize == -1) {
+				OxErr_SetFromWindows();
+				goto Failed;
+			}
+			sMD = OxAllocate(sizeof(char) * (bufsize + 1));
+			if (fseek(fp, 0L, SEEK_SET) != 0) {
+				OxErr_SetFromWindows();
+				goto Failed;
+			}
+
+			// Read the entire file into memory.
+			size_t newLen = fread(sMD, sizeof(char), bufsize, fp);
+			if (newLen == 0) {
+				OxErr_SetFromWindows();
+				goto Failed;
+			}
+			else {
+				sMD[newLen++] = '\0'; /* Just to be safe. */
+			}
+		}
+		fclose(fp);
+		return sMD;
+
+	Failed:
+		fclose(fp);
+	}
+	return NULL;
 }
 
 void

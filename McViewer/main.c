@@ -1,9 +1,9 @@
-// main.c  | McViewer © 2016 by Thomas Führinger
+﻿// main.c  | McViewer © 2016 by Thomas Führinger
 #include <Oxygen.h>
 #include "resource.h"
 #include "DragAndDrop.h"
 #include <fcntl.h>
-//https://msdn.microsoft.com/en-us/library/ms235627.aspx
+
 //ToDo: https://cocoapods.org/pods/MuPDF
 
 typedef struct _Globals {
@@ -193,22 +193,27 @@ FileShow()
 	if (_wcsicmp(g.szFileExtension, L".bmp") == 0 || _wcsicmp(g.szFileExtension, L".ico") == 0) {
 		OxImageObject* oxImage;
 		OxImageViewObject* oxView;
-		OxASSIGN(oxImage = OxImage_FromFile(g.sFileNamePath));
+		oxImage = OxImage_FromFile(g.sFileNamePath);
 		if (oxImage) {
 			OxASSIGN(oxView = OxImageView_New((OxWidgetObject*)OxApp->oxWindow, &g.rcClientArea, oxImage));
 			OxAttachObject(&g.oxClientWidget, (OxWidgetObject*)oxImage, FALSE);
 		}
+		else
+			OxApplication_ShowError();
 	}
 	else if (_wcsicmp(g.szFileExtension, L".avi") == 0 || _wcsicmp(g.szFileExtension, L".mp4") == 0 || _wcsicmp(g.szFileExtension, L".mpg") == 0 || _wcsicmp(g.szFileExtension, L".wmv") == 0 || _wcsicmp(g.szFileExtension, L".mov") == 0) {
 		OxVideoViewObject* oxView;
-		OxASSIGN(oxView = OxVideoView_New((OxWidgetObject*)OxApp->oxWindow, &g.rcClientArea));
-		if (oxView)
+		oxView = OxVideoView_New((OxWidgetObject*)OxApp->oxWindow, &g.rcClientArea);
+		if (oxView) {
 			OxCALL(OxVideoView_RenderFile(oxView, g.sFileNamePath));
-		OxAttachObject(&g.oxClientWidget, (OxWidgetObject*)oxView, FALSE);
+			OxAttachObject(&g.oxClientWidget, (OxWidgetObject*)oxView, FALSE);
+		}
+		else
+			OxApplication_ShowError();
 	}
 	else if (_wcsicmp(g.szFileExtension, L".txt") == 0 || _wcsicmp(g.szFileExtension, L".bat") == 0 || _wcsicmp(g.szFileExtension, L".c") == 0 || _wcsicmp(g.szFileExtension, L".h") == 0 || _wcsicmp(g.szFileExtension, L".py") == 0 || _wcsicmp(g.szFileExtension, L".log") == 0) {
 		OxHtmlViewObject* oxView;
-		OxASSIGN(oxView = OxLabel_New((OxWidgetObject*)OxApp->oxWindow, &g.rcClientArea));
+		oxView = OxLabel_New((OxWidgetObject*)OxApp->oxWindow, &g.rcClientArea);
 		//OxASSIGN(oxView = OxEntry_New((OxWidgetObject*)OxApp->oxWindow, &g.rcClientArea));
 		if (oxView) {
 			//SetWindowLongPtr(oxView, GWL_STYLE, ES_MULTILINE);
@@ -218,19 +223,24 @@ FileShow()
 			_set_fmode(_O_BINARY);
 			OxCALL(OxWidget_SetDataV(oxView, OxString_FromString(sText, NULL)));
 			OxFree(sText);
+			OxAttachObject(&g.oxClientWidget, (OxWidgetObject*)oxView, FALSE);
 		}
-		OxAttachObject(&g.oxClientWidget, (OxWidgetObject*)oxView, FALSE);
+		else
+			OxApplication_ShowError();
 	}
 	else if (_wcsicmp(g.szFileExtension, L".html") == 0 || _wcsicmp(g.szFileExtension, L".htm") == 0) {
 		OxHtmlViewObject* oxView;
-		OxASSIGN(oxView = OxHtmlView_New((OxWidgetObject*)OxApp->oxWindow, &g.rcClientArea));
-		if (oxView)
+		oxView = OxHtmlView_New((OxWidgetObject*)OxApp->oxWindow, &g.rcClientArea);
+		if (oxView) {
 			OxCALL(OxHtmlView_RenderURL(oxView, g.sFileNamePath));
-		OxAttachObject(&g.oxClientWidget, (OxWidgetObject*)oxView, FALSE);
+			OxAttachObject(&g.oxClientWidget, (OxWidgetObject*)oxView, FALSE);
+		}
+		else
+			OxApplication_ShowError();
 	}
 	else if (_wcsicmp(g.szFileExtension, L".md") == 0) {
 		OxMarkDownEntryObject* oxView;
-		OxASSIGN(oxView = OxMarkDownEntry_New((OxWidgetObject*)OxApp->oxWindow, &g.rcClientArea));
+		oxView = OxMarkDownEntry_New((OxWidgetObject*)OxApp->oxWindow, &g.rcClientArea);
 		if (oxView) {
 			char* sMD;
 			OxASSIGN(sMD = OxLoadFile(g.sFileNamePath));
@@ -238,6 +248,8 @@ FileShow()
 			OxFree(sMD);
 			OxAttachObject(&g.oxClientWidget, (OxWidgetObject*)oxView, FALSE);
 		}
+		else
+			OxApplication_ShowError();
 	}
 	else {
 		OxStatusBar_Message(OxApp->oxWindow->oxStatusBar, "File format not supported.", 0);

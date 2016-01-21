@@ -29,7 +29,7 @@ OxToolBar_New(OxWidgetObject* oxParent)
 		return NULL;
 	}
 
-	ox->hImageList = ImageList_Create(iBitmapSize, iBitmapSize, ILC_COLOR16 | ILC_MASK, 1, 20);
+	ox->hImageList = ImageList_Create(iBitmapSize, iBitmapSize, ILC_COLOR32 | ILC_MASK, 1, 20);
 
 	SendMessage(ox->hWin, TB_SETIMAGELIST, (WPARAM)OxTOOLBAR_IMGLST, (LPARAM)ox->hImageList);
 	SendMessage(ox->hWin, TB_BUTTONSTRUCTSIZE, (WPARAM)sizeof(TBBUTTON), 0);
@@ -64,6 +64,7 @@ OxToolBar_AppendItem(OxToolBarObject* ox, OxMenuItemObject* oxItem)
 		return FALSE;
 	};
 	OxFree(szCaption);
+	oxItem->oxToolBar = ox;
 	return TRUE;
 }
 

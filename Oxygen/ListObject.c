@@ -24,7 +24,7 @@ OxList_AppendItem(OxListObject* ox, OxObject* oxItem)
 {
 	if (ox->nSize == ox->nAllocated) {
 		ox->nAllocated *= 2;
-		if (ox->oxItems = (OxObject**)OxReAllocate(ox->oxItems, ox->nAllocated * sizeof(OxObject*)) == NULL) {
+		if ((ox->oxItems = (OxObject**)OxReAllocate(ox->oxItems, ox->nAllocated * sizeof(OxObject*))) == NULL) {
 			OxErr_SetString(OxERROR_RUNTIME, "Can not allocate memory for List.");
 			return -1;
 		}

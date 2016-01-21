@@ -21,6 +21,9 @@ OxImageView_New(OxWidgetObject* oxParent, OxRect* rc, OxImageObject* oxImage)
 	ox->bStretch = TRUE;
 	ox->bFill = FALSE;
 
+	OxRect rect;
+	rc = &rect;
+
 	OxWidget_CalculateRect((OxWidgetObject*)ox, rc);
 	ox->hWin = CreateWindowExW(0, szClass, L"", // WS_EX_CLIENTEDGE
 		WS_CHILD | WS_VISIBLE,
@@ -93,11 +96,15 @@ BOOL OxImageViewClass_Init()
 		return FALSE;
 	}
 
+#ifndef OxSTATIC
 	hPlaceholderBitmap = (HBITMAP)LoadImageW(OxApp->hDLL, MAKEINTRESOURCE(IDB_PLACEHOLDER), IMAGE_BITMAP, 0, 0, LR_DEFAULTCOLOR);
 	if (hPlaceholderBitmap == NULL){
 		OxErr_SetFromWindows();
 		return FALSE;
 	}
+#else
+	hPlaceholderBitmap = 0;
+#endif
 
 	pOxClass = &OxImageViewClass;
 	Ox_INHERIT_METHODS(pOxClass);
@@ -157,6 +164,7 @@ OxImageViewProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			}
 		}
 		else {
+#ifndef OxSTATIC
 			hDC = BeginPaint(hwnd, &paintStruct);
 			HDC hdcMem = CreateCompatibleDC(hDC);
 
@@ -166,6 +174,7 @@ OxImageViewProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 			SelectObject(hdcMem, hbmOld);
 			EndPaint(hwnd, &paintStruct);
+#endif
 		}
 		break;
 
