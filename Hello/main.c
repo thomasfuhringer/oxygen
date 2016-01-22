@@ -1,4 +1,4 @@
-﻿// main.c  | Oxygen test program © 2015 by Thomas Führinger
+﻿// main.c  | Oxygen test program © 2016 by Thomas Führinger
 #include <Oxygen.h>
 
 typedef struct _ClientWindow {
@@ -185,7 +185,7 @@ AboutCB()
 	OxWindowObject* oxWindow = OxWindow_New(OxApp->oxWindow, &rc, "About Hello Oxygen");
 	oxWindow->iMaxWidth = 320; oxWindow->iMaxHeight = 240;
 
-	rc = (OxRect){ .iLeft = 40, .iTop = 40, .iWidth = -40, .iHeight = -40 };
+	rc = (OxRect){ .iLeft = 60, .iTop = 60, .iWidth = -40, .iHeight = -40 };
 	OxLabelObject* oxLabel = OxLabel_New((OxWidgetObject*)oxWindow, &rc, "Demonstration program for\nOxygen C library\n\nThomas Führinger, 2015");
 	OxWindow_ShowModal(oxWindow);
 	OxREL(oxLabel);
