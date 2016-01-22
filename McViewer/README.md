@@ -8,4 +8,4 @@ Simple file viewer handling numerous formats:
 
 
 Binaries at:
-http://thomasfuhringer.github.io/oxygen/McViewer
+https://github.com/thomasfuhringer/oxygen/tree/master/Static
