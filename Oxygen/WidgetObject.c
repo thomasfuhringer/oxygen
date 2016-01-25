@@ -153,7 +153,7 @@ OxWidget_ShowV(OxWidgetObject* ox, BOOL bVisible)
 {
 	BOOL(*Method)(OxWidgetObject*) = (BOOL(*)(OxWidgetObject*))ox->pClass->aMethods[OxWIDGET_SHOW];
 	return Method(ox, bVisible);
-};
+}
 
 BOOL
 OxWidget_RenderFocus(OxWidgetObject* ox)
@@ -167,7 +167,7 @@ OxWidget_RenderFocusV(OxWidgetObject* ox)
 {
 	BOOL(*Method)(OxWidgetObject*) = (BOOL(*)(OxWidgetObject*))ox->pClass->aMethods[OxWIDGET_RENDERFOCUS];
 	return Method(ox);
-};
+}
 
 char*
 OxWidget_Represent(OxWidgetObject* ox)
@@ -181,7 +181,7 @@ static BOOL
 OxWidget_BeforeDelete(OxWidgetObject* ox)
 {
 	return TRUE;
-};
+}
 
 static BOOL CALLBACK
 OxWidgetReleaseEnumProc(HWND hwndChild, LPARAM lParam)
@@ -199,7 +199,7 @@ OxWidget_ReleaseChildren(OxWidgetObject* ox)
 	if (ox->hWin)
 		EnumChildWindows(ox->hWin, OxWidgetReleaseEnumProc, 0);
 	return TRUE;
-};
+}
 
 static BOOL
 OxWidget_Delete(OxWidgetObject* ox)

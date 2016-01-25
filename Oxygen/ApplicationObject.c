@@ -7,15 +7,15 @@ static OxClass* pOxClass;
 OxApplicationObject* OxApp; // global singleton
 
 OxApplicationObject*
-OxApplication_New(char* sName, HINSTANCE hInstance)
+OxApplication_New(char* sName)
 {
 	OxApplicationObject* ox = (OxApplicationObject*)OxObject_Allocate(&OxApplicationClass);
 	if (ox != NULL) {
 		ox->sName = OxDuplicateString(sName);
-		ox->hInstance = hInstance;
+		ox->hInstance = GetModuleHandle(NULL);
 		ox->hDLL = LoadLibraryA(OxDLLFILE);
 		if (ox->hDLL == 0) {
-			ox->hDLL = hInstance; // statically linked...
+			ox->hDLL = ox->hInstance; // statically linked...
 		}
 		ox->hDLLcomctl32 = GetModuleHandleA("COMCTL32.DLL");
 		if (ox->hDLLcomctl32 == 0) {
@@ -25,7 +25,7 @@ OxApplication_New(char* sName, HINSTANCE hInstance)
 #ifndef OxSTATIC
 		ox->hIcon = LoadIconW(ox->hDLL, MAKEINTRESOURCE(IDI_OXYGEN));
 #else
-		ox->hIcon = ExtractIconW(hInstance, L"SHELL32.DLL", -3);
+		ox->hIcon = ExtractIconW(ox->hInstance, L"SHELL32.DLL", -3);
 #endif
 		if (ox->hIcon == 0) {
 			OxErr_SetFromWindows();

@@ -6,7 +6,7 @@ BOOL
 OxInit(char* sAppName)
 {
 	hHeap = GetProcessHeap();
-	OxApp = OxApplication_New(sAppName, GetModuleHandle(NULL));
+	OxApp = OxApplication_New(sAppName);
 	if (OxApp == NULL)
 		return FALSE;
 	if (!OxObjectClass_Init())

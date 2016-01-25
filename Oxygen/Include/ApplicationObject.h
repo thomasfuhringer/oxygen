@@ -22,7 +22,7 @@ extern OxAPI OxApplicationObject* OxApp; // global singleton
 extern OxAPI OxClass OxApplicationClass;
 
 BOOL OxApplicationClass_Init();
-OxAPI OxApplicationObject* OxApplication_New(char* strName, HINSTANCE hInstance);
+OxAPI OxApplicationObject* OxApplication_New(char* strName);
 OxAPI int OxApplication_Run();
 OxAPI BOOL OxApplication_ShowError();
 OxAPI BOOL OxApplication_SaveState();
