@@ -219,19 +219,19 @@ OxDuplicateString(const char* sString)
 	return sDuplicate;
 }
 
-BOOL
+char*
 OxStringAppend(char* sMain, const char* sAppendix)
 {
 	if (sMain == NULL || sAppendix == NULL || lstrlenA(sAppendix) == 0)
-		return TRUE;
+		return NULL;
 
 	size_t nLen = lstrlenA(sMain) + lstrlenA(sAppendix) + 1;
 	sMain = (char*)OxReAllocate(sMain, nLen);
 	if (FAILED(StringCbCatA(sMain, nLen, sAppendix))){
 		OxErr_SetFromWindows();
-		return FALSE;
+		return NULL;
 	}
-	return TRUE;
+	return sMain;
 }
 
 char*

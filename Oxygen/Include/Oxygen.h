@@ -101,7 +101,7 @@ OxAPI BOOL OxFree(void* pChunk);
 OxAPI BOOL OxAttachObject(OxObject** poxMember, OxObject* oxObject, BOOL bStrong);
 OxAPI char* OxToU8(const LPWSTR szUTF16);
 OxAPI LPWSTR OxToW(const char* sTextUTF8);
-OxAPI BOOL OxStringAppend(char* sMain, const char* sAppendix);
+OxAPI char* OxStringAppend(char* sMain, const char* sAppendix);
 char* OxDuplicateString(const char* sString);
 OxAPI char* OxGetWindowText(HWND hWin);
 OxAPI char* OxLoadFile(char* sFileNamePath);
