@@ -5,6 +5,7 @@ x64
 *.exp
 *.pdb
 *.log
+*.res
+*.cache
 *.tlog
 *.lastbuildstate
-GTK

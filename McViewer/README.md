@@ -1,7 +1,7 @@
 # McViewer
 Simple file viewer handling numerous formats:
 
-* Mark Down
+* MarkDown
 * HTML
 * BMP
 * AVI
