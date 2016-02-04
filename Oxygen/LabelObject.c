@@ -1,4 +1,4 @@
-﻿// LabelObject.c  | Oxygen © 2015 by Thomas Führinger
+﻿// LabelObject.c  | Oxygen © 2016 by Thomas Führinger
 #include "Oxygen.h"
 
 static OxClass* pOxClass;
@@ -143,15 +143,14 @@ OxLabelProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
 	switch (msg)
 	{
-	case OCM_CTLCOLORSTATIC:
+	case OCM_CTLCOLORSTATIC: {
+		HDC hDC = (HDC)wParam;
+		SetBkMode(hDC, TRANSPARENT);
 		if (ox->textColor) {
-			HDC hDC = (HDC)wParam;
-			SetBkMode(hDC, TRANSPARENT);
 			SetTextColor(hDC, ox->textColor);
-			return (BOOL)GetSysColorBrush(COLOR_MENU);
 		}
-		break;
-
+		return ox->oxParent->hBkgBrush;
+	}
 	default:
 		break;
 	}

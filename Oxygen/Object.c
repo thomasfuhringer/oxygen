@@ -136,17 +136,20 @@ OxObject_CompareV(OxObject* ox, OxObject* ox2, int iOperator)
 BOOL
 OxObject_Delete(OxObject* ox)
 {
-	//OutputDebugStringA("+-- Deleting Object --- ");
+	//OutputDebugStringA("\n+-- Deleting Object --- ");
 	//OutputDebugStringA(ox->pClass->sName);
-	//OutputDebugStringA("\n\n");
 	//char* sString = OxObject_RepresentV(ox); OutputDebugStringA(sString); OxFree(sString); OutputDebugStringA("\n");
 
-	if (OxFree(ox))
-		return TRUE;
-	else {
+	BOOL bExit = (ox == OxApp->oxWindow);
+
+	if (!OxFree(ox)) {
 		OxErr_SetString(OxERROR_RUNTIME, "Can not free memory.");
 		return FALSE;
 	}
+
+	if (bExit)
+		PostQuitMessage(0);
+	return TRUE;
 }
 
 OxClass OxObjectClass = {

@@ -42,6 +42,7 @@ OxWidget_Init(OxWidgetObject* ox, OxWidgetObject* oxParent, OxRect* rc)
 	ox->oxLabel = NULL;
 	ox->fnOnDataChangedCB = NULL;
 	ox->pUserData = NULL;
+	ox->hBkgBrush = (BOOL)GetSysColorBrush(OxWINDOWBKGCOLOR);
 	return TRUE;
 }
 

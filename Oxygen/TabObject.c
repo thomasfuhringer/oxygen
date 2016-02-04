@@ -113,6 +113,7 @@ OxTabPage_New(OxTabObject* oxTab, char* sCaption, int iIndex)
 
 	OxRect rc = { .iLeft = 2, .iTop = 30, .iWidth = -5, .iHeight = -5 };
 	OxBox_Init(ox, oxTab, &rc);
+	ox->hBkgBrush = (BOOL)GetSysColorBrush(COLOR_WINDOW);
 
 	if (OxList_AppendItem(oxTab->oxPages, ox) != ox->iIndex)
 		return NULL;

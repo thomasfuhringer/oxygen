@@ -12,6 +12,6 @@ extern OxAPI OxClass OxBoxClass;
 
 BOOL OxBoxClass_Init();
 OxAPI OxBoxObject* OxBox_New(OxWidgetObject* oxParent, OxRect* rc);
-OxAPI OxBoxObject* OxBox_Init(OxBoxObject* ox, OxWidgetObject* oxParent, OxRect* rc);
+OxAPI BOOL OxBox_Init(OxBoxObject* ox, OxWidgetObject* oxParent, OxRect* rc);
 
 #endif /* OxBOXOBJECT_H */

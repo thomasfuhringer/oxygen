@@ -12,6 +12,8 @@
 #pragma comment(linker,"/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
 #endif
 
+#define OxWINDOWBKGCOLOR     COLOR_MENU // COLOR_WINDOW
+
 #define OxWIDGET_SHOW        	(OxOBJECT_LASTMETHID + 1)
 #define OxWIDGET_RENDERFOCUS  	(OxOBJECT_LASTMETHID + 2)
 #define OxWIDGET_SETDATA     	(OxOBJECT_LASTMETHID + 3)
@@ -41,6 +43,7 @@
         OxObject_HEAD \
         HWND hWin; \
 		OxRect rc; \
+        HBRUSH hBkgBrush; \
         WNDPROC fnOldWinProcedure; \
 		OxWindowObject* oxWindow; \
 		OxWidgetObject* oxParent; \

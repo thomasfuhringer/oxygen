@@ -316,9 +316,11 @@ AboutCB()
 static BOOL
 WindowBeforeDeleteCB(OxWindowObject* ox) // exit gracefully
 {
-	OxREL(g.oxClientWidget);
-	MyRevokeDragDrop(g.pDropTarget);
-	OxFree(g.sFileNamePath);
-	DeleteObject(g.hFont);
-	return OxExit();
+	if (ox == OxApp->oxWindow) {
+		OxREL(g.oxClientWidget);
+		MyRevokeDragDrop(g.pDropTarget);
+		OxFree(g.sFileNamePath);
+		DeleteObject(g.hFont);
+		return OxExit();
+	}
 }

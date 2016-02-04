@@ -148,7 +148,7 @@ OxHtmlView_New(OxWidgetObject* oxParent, OxRect* rc)
 	if (ox == NULL)
 		return NULL;
 
-	if (!OxHtmlView_Init((OxWidgetObject*)ox, oxParent, rc))
+	if (!OxHtmlView_Init((OxHtmlViewObject*)ox, oxParent, rc))
 		return NULL;
 
 	return ox;
@@ -161,8 +161,8 @@ OxHtmlView_Init(OxHtmlViewObject* ox, OxWidgetObject* oxParent, OxRect* rc)
 	RECT rect;
 	HRESULT hr;
 
-	if (!OxBox_Init((OxWidgetObject*)ox, oxParent, rc))
-		return NULL;
+	if (!OxBox_Init((OxBoxObject*)ox, oxParent, rc))
+		return FALSE;
 
 	ox->OleClientSiteExt.orig.lpVtbl = &IOleClientSiteTable;
 	ox->OleClientSiteExt.OleInPlaceSiteExt.orig.lpVtbl = &IOleInPlaceSiteTable;

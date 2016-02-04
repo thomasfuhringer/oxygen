@@ -19,10 +19,17 @@ OxSplitter_New(OxWidgetObject* oxParent, OxRect* rc, int iPosition)
 	ox->iPosition = iPosition;
 	ox->iSpacing = 4;
 
-	OxBox_Init(ox, oxParent, rc);
+	if (!OxBox_Init(ox, oxParent, rc))
+		return NULL;
 
 	ox->oxBox1 = OxBox_New(ox, rc);
+	if (ox->oxBox1 == NULL)
+		return NULL;
 	ox->oxBox2 = OxBox_New(ox, rc);
+	if (ox->oxBox2 == NULL)
+		return NULL;
+
+	ox->oxBox1->hBkgBrush = ox->oxBox2->hBkgBrush = (BOOL)GetSysColorBrush(COLOR_WINDOW);
 
 	SetWindowLongPtr(ox->oxBox1->hWin, GWL_EXSTYLE, WS_EX_CLIENTEDGE);
 	SetWindowLongPtr(ox->oxBox2->hWin, GWL_EXSTYLE, WS_EX_CLIENTEDGE);

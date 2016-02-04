@@ -158,10 +158,6 @@ OxWindow_Delete(OxWindowObject* ox)
 	OxREL(ox->oxStatusBar);
 	if (DestroyWindow(ox->hWin) == 0)
 		OxErr_SetFromWindows();
-	if (ox == OxApp->oxWindow) {
-		//OutputDebugString(L"Main Window Destroying\n");
-		PostQuitMessage(0);
-	}
 	return pOxClass->pBase->fnDelete(ox);
 }
 
@@ -188,7 +184,7 @@ OxWindowClass_Init()
 	wc.hInstance = OxApp->hInstance;
 	wc.hIcon = OxApp->hIcon;
 	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
-	wc.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
+	wc.hbrBackground = (HBRUSH)(OxWINDOWBKGCOLOR + 1);
 	wc.lpszMenuName = NULL;
 	wc.lpszClassName = szWindowClass;
 	wc.hIconSm = OxApp->hIcon;
@@ -255,7 +251,6 @@ OxWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			ShowWindow(ox->hWin, SW_HIDE);
 			//return 0;
 		}
-
 		if (ox->bDeleteOnClose)
 			OxREL(ox);
 		return 0;

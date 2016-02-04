@@ -4,8 +4,6 @@
 static OxClass* pOxClass;
 static LPWSTR szBoxClass = L"OxBoxClass";
 
-OxBoxObject* OxBox_Init(OxBoxObject* ox, OxWidgetObject* oxParent, OxRect* rc);
-
 OxBoxObject*
 OxBox_New(OxWidgetObject* oxParent, OxRect* rc)
 {
@@ -13,14 +11,14 @@ OxBox_New(OxWidgetObject* oxParent, OxRect* rc)
 	if (ox == NULL)
 		return NULL;
 
-	return OxBox_Init(ox, oxParent, rc);
+	return OxBox_Init((OxBoxObject*)ox, oxParent, rc) ? ox : NULL;
 }
 
-OxBoxObject*
+BOOL
 OxBox_Init(OxBoxObject* ox, OxWidgetObject* oxParent, OxRect* rc)
 {
 	if (!OxWidget_Init((OxWidgetObject*)ox, oxParent, rc))
-		return NULL;
+		return FALSE;
 
 	OxRect rect;
 	rc = &rect;
@@ -32,11 +30,11 @@ OxBox_Init(OxBoxObject* ox, OxWidgetObject* oxParent, OxRect* rc)
 
 	if (ox->hWin == NULL) {
 		OxErr_SetFromWindows();
-		return NULL;
+		return FALSE;
 	}
 
 	SetWindowLongPtr(ox->hWin, GWLP_USERDATA, (LONG_PTR)ox);
-	return ox;
+	return TRUE;
 }
 
 static BOOL
@@ -69,7 +67,7 @@ OxBoxClass_Init()
 	wc.hInstance = OxApp->hInstance;
 	wc.hIcon = NULL;
 	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
-	wc.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
+	wc.hbrBackground = NULL; //(HBRUSH)(OxWINDOWBKGCOLOR + 1);
 	wc.lpszMenuName = NULL;
 	wc.lpszClassName = szBoxClass;
 	wc.hIconSm = NULL;
@@ -88,17 +86,17 @@ OxBoxClass_Init()
 static LRESULT CALLBACK
 OxBoxProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-	/*
 	switch (uMsg)
 	{
-
-	case WM_SIZE:
-	if (wParam != SIZE_MINIMIZED)
-	{
-	EnumChildWindows(hwnd, OxSizeEnumProc, 0);
+	case WM_ERASEBKGND: {
+		OxBoxObject* ox = (OxBoxObject*)GetWindowLongPtrW(hwnd, GWLP_USERDATA);
+		if (ox == NULL)
+			break;
+		RECT rc;
+		GetClientRect(hwnd, &rc);
+		FillRect((HDC)wParam, &rc, ox->hBkgBrush);
+		return 1L;
 	}
-	break;
-	}*/
-
+	}
 	return DefParentProc(hwnd, uMsg, wParam, lParam, FALSE);
 }

@@ -13,7 +13,7 @@ OxMarkDownEntry_New(OxWidgetObject* oxParent, OxRect* rc)
 	if (ox == NULL)
 		return NULL;
 
-	if (!OxHtmlView_Init((OxWidgetObject*)ox, oxParent, rc))
+	if (!OxHtmlView_Init((OxHtmlViewObject*)ox, oxParent, rc))
 		return NULL;
 
 	return ox;
