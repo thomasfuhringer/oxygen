@@ -254,6 +254,10 @@ OxWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		if (ox->bDeleteOnClose)
 			OxREL(ox);
 		return 0;
+
+	case WM_DESTROY:
+		OxCALL(OxWidget_ReleaseChildren(ox));
+		break;
 	}
 
 	return DefParentProc(hwnd, uMsg, wParam, lParam, (OxWidgetObject*)ox);

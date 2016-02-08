@@ -283,8 +283,9 @@ PropertiesCB()
 	OxLabelObject* oxLabelFileData = OxLabel_New((OxWidgetObject*)oxWindow, &rc, g.sFileNamePath);
 
 	OxWindow_ShowModal(oxWindow);
-	OxREL(oxLabelFile);
-	OxREL(oxLabelFileData);
+	//OxREL(oxLabelFile);
+	//OxREL(oxLabelFileData);
+	OxREL(oxWindow);
 	return TRUE;
 }
 
@@ -295,20 +296,18 @@ AboutCB()
 	OxWindowObject* oxWindow = OxWindow_New(OxApp->oxWindow, &rc, "About");
 	oxWindow->iMaxWidth = 430; oxWindow->iMaxHeight = 280;
 
-	rc = (OxRect){ .iLeft = 20, .iTop = 20, .iWidth = 40, .iHeight = 40 };
+	rc = (OxRect){ .iLeft = 30, .iTop = 30, .iWidth = 40, .iHeight = 40 };
 	OxImageViewObject* oxImageView = OxImageView_New((OxWidgetObject*)oxWindow, &rc, OxApp->oxIcon);
 
-	rc = (OxRect){ .iLeft = 80, .iTop = 20, .iWidth = -20, .iHeight = -20 };
+	rc = (OxRect){ .iLeft = 90, .iTop = 30, .iWidth = -20, .iHeight = -20 };
 	OxLabelObject* oxLabel = OxLabel_New((OxWidgetObject*)oxWindow, &rc,
 		"McViewer\n"\
-		"Version 0.9\n\n"\
+		"Version 0.9.1\n\n"\
 		"Simple file viewer\nFormats: \n"\
 		"BMP, ICO, AVI, MPG, WMV, HTML, MD, TXT\n\n"\
 		"https://github.com/thomasfuhringer/oxygen\n\n"\
 		"Thomas Führinger, 2016");
 	OxWindow_ShowModal(oxWindow);
-	OxREL(oxLabel);
-	OxREL(oxImageView);
 	OxREL(oxWindow);
 	return TRUE;
 }
@@ -323,4 +322,5 @@ WindowBeforeDeleteCB(OxWindowObject* ox) // exit gracefully
 		DeleteObject(g.hFont);
 		return OxExit();
 	}
+	return TRUE;
 }

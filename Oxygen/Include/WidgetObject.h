@@ -73,16 +73,17 @@ typedef struct _OxWidgetObject {
 extern OxAPI OxClass OxWidgetClass;
 
 BOOL OxWidgetClass_Init();
-OxWidgetObject* OxWidget_New();
+OxAPI OxWidgetObject* OxWidget_New();
 OxAPI BOOL OxWidget_Init(OxWidgetObject* ox, OxWidgetObject* oxParent, OxRect* rc);
 OxAPI BOOL OxWidget_ShowV(OxWidgetObject* ox, BOOL bVisible);
 OxAPI BOOL OxWidget_CalculateRect(OxWidgetObject* ox, OxRect* rc);
 OxAPI BOOL OxWidget_SetCaption(OxWidgetObject* ox, char* sText);
 OxAPI BOOL OxWidget_SetCaptionV(OxWidgetObject* ox, char* sText);
-BOOL OxWidget_Reposition(OxWidgetObject* ox);
+OxAPI BOOL OxWidget_Reposition(OxWidgetObject* ox);
+OxAPI BOOL OxWidget_RepositionV(OxWidgetObject* ox);
 OxAPI BOOL OxWidget_RenderFocusV(OxWidgetObject* ox);
 OxAPI BOOL OxWidget_SetData(OxWidgetObject* ox, OxObject* oxData);
 OxAPI BOOL OxWidget_SetDataV(OxWidgetObject* ox, OxObject* oxData);
-BOOL OxWidget_RepositionV(OxWidgetObject* ox);
+OxAPI BOOL OxWidget_ReleaseChildren(OxWidgetObject* ox);
 
 #endif /* OxWIDGETOBJECT_H */

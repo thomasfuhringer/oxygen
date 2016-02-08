@@ -82,23 +82,23 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
 	OxASSIGN(pMW->oxTabPageDivision = OxTabPage_New(pMW->oxTab, "Division", -1));
 
 
-	rc = (OxRect){ .iLeft = 80, .iTop = 20, .iWidth = -20, .iHeight = 20 };
+	rc = (OxRect){ .iLeft = 90, .iTop = 20, .iWidth = -20, .iHeight = 20 };
 	OxASSIGN(pMW->oxEntryDividend = OxEntry_New((OxWidgetObject*)pMW->oxTabPageDivision, &rc));
 	pMW->oxEntryDividend->pDataType = &OxIntegerClass;
-	rc.iLeft -= 60; rc.iWidth = 50;
+	rc.iLeft -= 70; rc.iWidth = 60;
 	pMW->oxEntryDividend->oxLabel = OxLabel_New((OxWidgetObject*)pMW->oxTabPageDivision, &rc, "Dividend");
 
-	rc = (OxRect){ .iLeft = 80, .iTop = 50, .iWidth = -20, .iHeight = 20 };
+	rc = (OxRect){ .iLeft = 90, .iTop = 50, .iWidth = -20, .iHeight = 20 };
 	OxASSIGN(pMW->oxEntryDivisor = OxEntry_New((OxWidgetObject*)pMW->oxTabPageDivision, &rc));
 	pMW->oxEntryDivisor->fnVerifyCB = DivisorVerifyCB;
 	pMW->oxEntryDivisor->pDataType = &OxIntegerClass;
-	rc.iLeft -= 60; rc.iWidth = 50;
+	rc.iLeft -= 70; rc.iWidth = 60;
 	pMW->oxEntryDividend->oxLabel = OxLabel_New((OxWidgetObject*)pMW->oxTabPageDivision, &rc, "Divisor");
 
-	rc = (OxRect){ .iLeft = 80, .iTop = 100, .iWidth = -20, .iHeight = 20 };
+	rc = (OxRect){ .iLeft = 90, .iTop = 100, .iWidth = -20, .iHeight = 20 };
 	OxASSIGN(pMW->oxLabelQuotient = OxLabel_New((OxWidgetObject*)pMW->oxTabPageDivision, &rc));
 	pMW->oxLabelQuotient->pDataType = &OxFloatClass;
-	rc.iLeft -= 60; rc.iWidth = 50;
+	rc.iLeft -= 70; rc.iWidth = 60;
 	pMW->oxLabelQuotient->oxLabel = OxLabel_New((OxWidgetObject*)pMW->oxTabPageDivision, &rc, "Quotient");
 	//OxLabel_SetTextColor(pMW->oxLabelQuotient->oxLabel, 0, 0, 250);
 
@@ -198,7 +198,7 @@ WindowBeforeDeleteCB(OxWindowObject* ox) // exit gracefully
 {
 	if (ox->pClass == &OxMdiWindowClass) {
 		ClientWindow* pMW = (ClientWindow*)ox->pUserData;
-
+/*
 		OxREL(pMW->oxLabelMultiplication);
 		OxREL(pMW->oxSplitter);
 		OxREL(pMW->oxTabPageMultiplication);
@@ -218,6 +218,7 @@ WindowBeforeDeleteCB(OxWindowObject* ox) // exit gracefully
 		OxREL(pMW->oxTabPageBrowser);
 
 		OxREL(pMW->oxTab);
+        */
 		OxFree(pMW);
 
 		return OxExit();

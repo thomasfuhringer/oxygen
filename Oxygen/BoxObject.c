@@ -86,17 +86,21 @@ OxBoxClass_Init()
 static LRESULT CALLBACK
 OxBoxProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
+	OxBoxObject* ox = (OxBoxObject*)GetWindowLongPtrW(hwnd, GWLP_USERDATA);
 	switch (uMsg)
 	{
-	case WM_ERASEBKGND: {
-		OxBoxObject* ox = (OxBoxObject*)GetWindowLongPtrW(hwnd, GWLP_USERDATA);
+	case WM_ERASEBKGND:
 		if (ox == NULL)
 			break;
 		RECT rc;
 		GetClientRect(hwnd, &rc);
 		FillRect((HDC)wParam, &rc, ox->hBkgBrush);
 		return 1L;
+
+	case WM_DESTROY:
+		OxCALL(OxWidget_ReleaseChildren(ox));
+		break;
 	}
-	}
+
 	return DefParentProc(hwnd, uMsg, wParam, lParam, FALSE);
 }

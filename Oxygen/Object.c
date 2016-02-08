@@ -41,14 +41,14 @@ OxObject_RefCountIncrease(OxObject* ox)
 }
 
 BOOL
-OxObject_RefCountDecrease(OxObject** ox)
+OxObject_RefCountDecrease(OxObject** pox)
 {
 	BOOL bResult = TRUE;
-	if (*ox == NULL || (*ox)->iRefCount < 1)
+	if (*pox == NULL || (*pox)->iRefCount < 1)
 		return TRUE;
-	if (--(*ox)->iRefCount == 0) {
-		bResult = (*ox)->pClass->fnDelete(*ox);
-		*ox = NULL;
+	if (--(*pox)->iRefCount == 0) {
+		bResult = (*pox)->pClass->fnDelete(*pox);
+		*pox = NULL;
 	}
 	return bResult;
 }

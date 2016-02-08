@@ -85,7 +85,7 @@ BOOL OxImageViewClass_Init()
 	wc.hInstance = OxApp->hInstance;
 	wc.hIcon = NULL;
 	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
-	wc.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
+	wc.hbrBackground = (HBRUSH)(OxWINDOWBKGCOLOR + 1);
 	wc.lpszMenuName = NULL;
 	wc.lpszClassName = szClass;
 	wc.hIconSm = NULL;
@@ -127,6 +127,7 @@ OxImageViewProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			OxImageObject* oxImage = (OxImageObject*)ox->oxData;
 			if (oxImage->iType == OxIMAGEFORMAT_BMP) {
 				hDC = BeginPaint(hwnd, &paintStruct);
+				SetDCBrushColor(hDC, ox->oxParent->hBkgBrush);
 				HDC hdcMem = CreateCompatibleDC(hDC);
 				HBITMAP hbmOld = SelectObject(hdcMem, oxImage->hWin);
 				GetObject(oxImage->hWin, sizeof(BITMAP), &bitmap);

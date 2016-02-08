@@ -97,12 +97,14 @@ OxVideoView_Reposition(OxVideoViewObject* ox)
 static BOOL
 OxVideoView_Delete(OxVideoViewObject* ox)
 {
-	ox->pControl->lpVtbl->Stop(ox->pControl);
-	ox->pVidWin->lpVtbl->put_Visible(ox->pVidWin, OAFALSE);
-	ox->pVidWin->lpVtbl->put_Owner(ox->pVidWin, NULL);
-	ox->pControl->lpVtbl->Release(ox->pControl);
-	ox->pVidWin->lpVtbl->Release(ox->pVidWin);
-	ox->pGraph->lpVtbl->Release(ox->pGraph);
+	if (ox->pControl) {
+		ox->pControl->lpVtbl->Stop(ox->pControl);
+		ox->pControl->lpVtbl->Release(ox->pControl);
+		ox->pVidWin->lpVtbl->put_Visible(ox->pVidWin, OAFALSE);
+		ox->pVidWin->lpVtbl->put_Owner(ox->pVidWin, NULL);
+		ox->pVidWin->lpVtbl->Release(ox->pVidWin);
+		ox->pGraph->lpVtbl->Release(ox->pGraph);
+	}
 	return pOxClass->pBase->fnDelete((OxObject*)ox);
 }
 

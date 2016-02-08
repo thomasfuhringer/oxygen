@@ -188,13 +188,14 @@ static BOOL CALLBACK
 OxWidgetReleaseEnumProc(HWND hwndChild, LPARAM lParam)
 {
 	OxWidgetObject* oxWidget = (OxWidgetObject*)GetWindowLongPtr(hwndChild, GWLP_USERDATA);
+	//Xi(oxWidget->pClass->sName, oxWidget);
 	if (oxWidget && !OxREL(oxWidget))
 		return FALSE;
 	else
 		return TRUE;
 }
 
-static BOOL
+BOOL
 OxWidget_ReleaseChildren(OxWidgetObject* ox)
 {
 	if (ox->hWin)
@@ -209,8 +210,6 @@ OxWidget_Delete(OxWidgetObject* ox)
 		return FALSE;
 	OxREL(ox->oxLabel);
 	OxREL(ox->oxData);
-	if (!OxWidget_ReleaseChildren(ox))
-		return FALSE;
 	return pOxClass->pBase->fnDelete(ox);
 }
 
